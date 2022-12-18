@@ -1,0 +1,1294 @@
+Recoding of missing values exported to Stata
+
+coco7_q02mod  Avis temporalité confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q214  Avis règles confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q04  Auto-évaluation de la santé
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q215  Se considère personne à risque
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q216  Se sent exposé(e) au covid-19
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q09  Infection par le virus covid-19
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q16  Les 2 dernières semaines, s'est senti : nerveux
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q17  Les 2 dernières semaines, s'est senti : découragé
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q18  Les 2 dernières semaines, s'est senti : calme
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q19  Les 2 dernières semaines, s'est senti : triste et abattu
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q20  Les 2 dernières semaines, s'est senti : heureux
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q21  Sentiment de solitude
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q22  Résidence actuelle
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q23  Nombre de personnes vivant dans le ménage
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q24mod_1  Vit avec : conjoint(e)
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+6666           .B             Non concerné(e)
+
+
+coco7_q24mod_2  Vit avec : enfant(s)
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné(e)
+9999           .B             N'a pas répondu
+
+
+coco7_q24mod_3  Vit avec : parent(s) ou grand-parent(s)
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné(e)
+9999           .B             N'a pas répondu
+
+
+coco7_q24mod_4  Vit avec : autre(s) membre(s) de la famille
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné(e)
+9999           .B             N'a pas répondu
+
+
+coco7_q24mod_5  Vit avec : ami(s)
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné(e)
+9999           .B             N'a pas répondu
+
+
+coco7_q24mod_6  Vit avec : chien(s)
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q24mod_7  Vit avec : autre(s) animaux de compagnie
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q24mod_8  Vit avec : aucun animal de compagnie
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné(e)
+9999           .B             N'a pas répondu
+
+
+coco7_q25  Tensions au sein du ménage
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q32mod  Situation vis-à-vis du travail
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q37_recod  Situation actuelle
+
+Orig. Value    New Value      Label
+6666           .A             Non concerné
+9999           .B             N'a pas répondu
+
+
+coco7_q38  Situation actuelle vis-à-vis du télétravail
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q40  Raison principale pour se rendre sur le lieu de travail
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q32CONJOINT  Situation vis-à-vis du travail du conjoint
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q133_recod  Situation actuelle du conjoint
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q134mod  Situation actuelle vis-à-vis du conjoint du télétravail
+
+Orig. Value    New Value      Label
+6666           .A             Non concernée
+9999           .B             N'a pas répondu
+
+
+coco7_q47mod  Fréquence de sorties
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q52_1  Fréquence des rencontres avec des amis
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q52_2  Fréquence des rencontres avec des amis par rencontre virtuelle
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q52_3  Fréquence des rencontres avec la famille
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q52_4  Fréquence des rencontres avec  la famille par rencontre virtuelle
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_1  Perdu contact avec : famille
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_2  Perdu contact avec : voisins
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_3  Perdu contact avec : collègues
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_4  Perdu contact avec : amis
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_5  Perdu contact avec : membres d'association
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_6  Perdu contact avec : personnes rencontrées en ligne
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_7  Perdu contact avec : commerçants
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_8  Perdu contact avec : autres personnes
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q119120_9  Perdu contact avec : personne
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q217  Essaye d'éviter contacts physiques
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_1  Reçu un coup de main ou l’aide : de la famille
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_2  Reçu un coup de main ou l’aide : d'amis proches
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_3  Reçu un coup de main ou l'aide : de collègues
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_4  Reçu un coup de main ou l'aide : de voisins
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_5  Reçu un coup de main ou l'aide : d'agents des services publics
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_6  Reçu un coup de main ou l'aide : de bénévoles d’une association
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_7  Reçu un coup de main ou l'aide : de personnes que vous ne connaissiez pas auparavant
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_8  Reçu un coup de main ou l'aide : d'aucune personne
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_1  Donné un coup de main ou de l’aide à : la famille
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_2  Donné un coup de main ou de l’aide à : des amis proches
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_3  Donné un coup de main ou l'aide à : des collègues
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_4  Donné un coup de main ou l'aide à : des voisins
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_5  Donné un coup de main ou l'aide à : une association
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_6  Donné un coup de main ou l'aide à : des personnes que vous ne connaissiez pas auparavant
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q54_bis_7  Donné un coup de main ou l'aide à : personne
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_1  Temps consacré à : faire du ménage
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_2  Temps consacré à : s’occuper de ses enfants
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_3  Temps consacré à : prendre soin de personnes fragiles ou vulnérables
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_4  Temps consacré à : exercer son activité professionnelle
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_5  Temps consacré à : faire des exercices physiques / du sport
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_6  Temps consacré à : dormir
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_7  Temps consacré à : parler au téléphone
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_8  Temps consacré à : utiliser des réseaux sociaux
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q59_9  Temps consacré à : regarder la télévision
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_1  Fréquence de : faire les courses
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_2  Fréquence de : faire la cuisine
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_3  Fréquence de : lire
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_4  Fréquence de : faire du bricolage, du jardinage, des travaux de décoration
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_5  Fréquence de : prier
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q60_6  Fréquence de : méditer
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_10  A plus ou moins : eu des relations intimes
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_11  A plus ou moins : consommé de boissons alcoolisées
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_12  A plus ou moins : fumé
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_13  A plus ou moins : joué à des jeux de société
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_14  A plus ou moins : chanté ou dansé
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q61_15  A plus ou moins : écouté de podcasts
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q62mod  Expérience du deuxième confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q63mod  Conditions de vie lors du deuxième confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q64mod  Poids subjectif du confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q218_CORR  Comparaison avec le premier confinement
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q113mod  Dispose de temps libre
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q114mod  Sort de son logement plus d'une heure
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q67  Confiance aux autres
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q79  Préoccupation par les conséquences sanitaires ou les conséquences économiques de l’épidémie du virus Covid-19
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q68  Satisfaction quant à la manière dont le Gouvernement français gère l'épidémie du virus Covid-19
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q97  Réaction au possible passeport covid
+
+Orig. Value    New Value      Label
+9999           .A             
+
+
+coco7_q71  Avis Covid-19 : libéraliser le marché du travail pour soutenir certains secteurs
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q72  Avis Covid-19 : limiter la liberté de circulation des individus pour le bien collectif
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q73  Avis Covid-19 : réquisitionner des biens privés pour le bien collectif
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q74  Avis Covid-19 : assurer le bien collectif sans se soucier de l’équilibre des finances publiques
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_q77  Avis Covid-19 : les Français savent prendre leurs responsabilités dans les périodes de crise
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q219  Avis Covid-19 : colère par rapport au comportement des Français
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q220  Avis Covid-19 : colère par rapport aux limitations de liberté
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+coco7_Q221  Avis Covid-19 : prêt à manifester contre les mesures prises
+
+Orig. Value    New Value      Label
+9999           .A             N'a pas répondu
+
+
+eayy_A3B_rec  Pays de naissance (recodage)
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_A3C_rec  Nationalité (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+
+
+eayy_A3E_rec  Seconde nationalité (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+
+
+eayy_A4  Statut matrimonial légal
+
+Orig. Value    New Value      Label
+77             .A             Refuse de répondre
+
+
+eayy_A5  Vit en couple
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+
+
+eayy_A5A  Situation familiale
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_A5C  Ancienneté du couple
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_A5C_rec  Ancienneté du couple (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+99             .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_B1  Situation principale vis-à-vis du travail
+
+Orig. Value    New Value      Label
+77             .A             Refuse de répondre
+
+
+eayy_B10A  Recherche d'emploi
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+
+
+eayy_B10AA  Rercherche un autre emploi
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_B10ACJT  Recherche d'emploi (conjoint)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+7              .B             Refuse de réponse
+8              .C             Ne sait pas
+
+
+eayy_B11  Ne travaille pas mais a déjà travaillé
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+
+
+eayy_B11CJT  Ne travaille pas mais a déjà travaillé (conjoint)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+
+
+eayy_B18CCJT  Niveau de formation (conjoint) (calcul)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+
+
+eayy_B18CJT_rec  Diplôme le plus élevé (conjoint) (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+
+
+eayy_B1A  Emploi (étudiant, chômeur, retraité, autre inactif)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_B1ACJT  Emploi (étudiant, chômeur, retraité, autre inactif) (conjoint)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_B1B  Exercice d'une activité professionnelle (recodage)
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+
+
+eayy_B1BCJT  Exercice d'une activité professionnelle (conjoint) (calcul)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+7              .B             Refuse de répondre
+
+
+eayy_B1CJT  Situation principale vis-à-vis du travail (conjoint)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+77             .B             Refuse de répondre
+
+
+eayy_B2_rec  Statut de l'activité actuelle ou antérieure (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+88             .B             Ne sait pas
+
+
+eayy_B25  Supervision d'autres salariés
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+7              .B             Refuse de répondre
+8              .C             Ne sait pas
+
+
+eayy_B2CJT_rec  Statut de l'activité actuelle ou antérieure (conjoint) (calcul)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+88             .B             Ne sait pas
+
+
+eayy_B4_rec  Nombre de salariés employés actuellement ou par le passé (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+8              .B             Ne sait pas
+
+
+eayy_B4CJT_rec  Nombre de salariés employés actuellement ou par le passé (conjoint) (calcul)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+8              .B             Ne sait pas
+
+
+eayy_B5_rec  Type de contrat de travail (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+
+
+eayy_B5A  Temps de travail
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+
+
+eayy_B5B_rec  Type de temps partiel (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+
+
+eayy_B5C  Raison principale du travail à temps partiel
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+
+
+eayy_B6A_rec  Catégorie de l'emploi actuel ou antérieur secteur privé (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+88             .B             Ne sait pas
+
+
+eayy_B6B_rec  Catégorie de l'emploi actuel ou antérieur secteur public (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+88             .B             Ne sait pas
+
+
+eayy_B7B_rec  Fonction principale de l'emploi actuel ou antérieur (recodage)
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+88             .B             Ne sait pas
+
+
+eayy_B8_rec  Nombre de salariés dans l'entreprise de l'emploi actuel ou antérieur (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+8              .B             Ne sait pas
+
+
+eayy_B9_rec  Superficie de l'exploitation actuelle ou antérieure (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+8              .B             Ne sait pas
+
+
+eayy_C8  A des enfants
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+9996           .B             Non enquêté(e)
+
+
+eayy_C8A_rec  Nombre d'enfants (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_C8B_rec  Nombre d'enfants cohabitants (recodage)
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_D1_rec  Statut d'occupation du logement (recodage)
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_D1A  Appartenance du logement à un organisme HLM
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+8              .B             Ne sait pas
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_D2  Propriétaire du logement
+
+Orig. Value    New Value      Label
+66             .A             Non concerné
+77             .B             Refuse de répondre
+88             .C             Ne sait pas
+
+
+eayy_D5_rec  Année d'emménagement dans le logement (calcul)
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D6  Type d'habitat au voisinage du logement
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_1  Problèmes concernant le quartier : terrains-vagues, locaux désaffectés, friches industrielles, logements insalubres
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_10  Problèmes concernant le quartier : aucun de ces problèmes
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_2  Problèmes concernant le quartier : bruits ou pollution
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_3  Problèmes concernant le quartier : voirie insuffisante
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_4  Problèmes concernant le quartier : saleté
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_5  Problèmes concernant le quartier : manque d'espaces verts
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_6  Problèmes concernant le quartier : manque de commerces
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_7  Problèmes concernant le quartier : manque de lieux de rencontre, d'équipements
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_8  Problèmes concernant le quartier : isolement du quartier
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_D7_9  Problèmes concernant le quartier : manque de sécurité
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_E2A_rec  Tranche de montant des ressources (calcul)
+
+Orig. Value    New Value      Label
+77             .A             Refuse de répondre
+88             .B             Ne sait pas
+
+
+eayy_E2AUC  Tranche de revenu mensuel du ménage par unité de consommation (calcul)
+
+Orig. Value    New Value      Label
+99             .A             N'a pas répondu
+
+
+eayy_E3A  Détention placements financiers : livrets d'épargne
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+
+
+eayy_E3B  Détention placements financiers : épargne-logement
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+
+
+eayy_E3C  Détention placements financiers : assurances-vies
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+
+
+eayy_E3D  Détention placements financiers : épargne retraite
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+
+
+eayy_E3E  Détention placements financiers : valeurs immobilières
+
+Orig. Value    New Value      Label
+9996           .A             Non enquêté(e)
+
+
+eayy_E4  Résidence secondaire
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_E5  Situation financière actuelle du mènage
+
+Orig. Value    New Value      Label
+99             .A             N'a pas répondu
+
+
+eayy_E5A  Baisse de revenu importante les 12 derniers mois
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+9996           .B             Non enquêté(e)
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_1  Baisse de revenu importante les 12 derniers mois : licenciement/perte d'emploi
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_2  Baisse de revenu importante les 12 derniers mois : modification du salaire/heures
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_3  Baisse de revenu importante les 12 derniers mois : invalidité/incapacité
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_4  Baisse de revenu importante les 12 derniers mois : maternité/congé parental/garde des enfants
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_5  Baisse de revenu importante les 12 derniers mois : départ à la retraite
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_6  Baisse de revenu importante les 12 derniers mois : mariage/rupture
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_7  Baisse de revenu importante les 12 derniers mois : décès
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_8  Baisse de revenu importante les 12 derniers mois : autre changement dans le ménage
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+
+
+eayy_E5B_9  Baisse de revenu importante les 12 derniers mois: autre raison
+
+Orig. Value    New Value      Label
+6              .A             Non concerné
+9              .B             N'a pas répondu
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_F1_rec  Fréquence de rencontre des amis (recodage)
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_F3  A quelqu'un pour discuter de questions intimes et personnelles
+
+Orig. Value    New Value      Label
+8              .A             Ne sait pas
+
+
+eayy_F4  Sentiment de solitude
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_F5  Opinion confiance ou prudence en général
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+9996           .C             Non enquêté(e)
+9996           .D             Non enquêté(e)
+
+
+eayy_F6_rec  Fréquence de rencontre de la famille (recodage)
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_F7  Membre association humanitaire ou sociale
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_F8  Membre amicale ou association sportive ou culturelle
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_G1  Télévision les 12 derniers mois
+
+Orig. Value    New Value      Label
+8              .A             Ne sait pas
+
+
+eayy_G2  Nombre de livres lus les 12 derniers mois
+
+Orig. Value    New Value      Label
+8              .A             Ne sait pas
+
+
+eayy_G3A  Sortie culturelle les 12 derniers mois : au cinéma
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G3B  Sortie culturelle les 12 derniers mois : au théâtre ou au concert
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G3C  Sortie culturelle les 12 derniers mois : au musée ou une exposition
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G4  Bricolage les 12 derniers mois
+
+Orig. Value    New Value      Label
+8              .A             Ne sait pas
+
+
+eayy_G5  Maîtrise d'une langue étrangère
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G6_1  Partir en vacances les 12 derniers mois : non
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G6_2  Partir en vacances les 12 derniers mois : dans la région
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G6_3  Partir en vacances les 12 derniers mois : dans une autre région
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_G6_4  Partir en vacances les 12 derniers mois : à l'étranger
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_H1A  A une religion (recodage)
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+
+
+eayy_H2  Importance de la religion
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_H4  Éducation religieuse
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_I1  Intérêt pour la politique
+
+Orig. Value    New Value      Label
+8              .A             Ne sait pas
+
+
+eayy_I8  Auto-positionnement sur l'échelle gauche/droite
+
+Orig. Value    New Value      Label
+77             .A             Refuse de répondre
+88             .B             Ne sait pas
+
+
+eayy_J1  État de santé
+
+Orig. Value    New Value      Label
+7              .A             Refuse de répondre
+8              .B             Ne sait pas
+
+
+eayy_K3  Fréquence activité sportive 30 minutes d'affilée
+
+Orig. Value    New Value      Label
+9              .A             N'a pas répondu
+
+
+eayy_PCS18  Catégorie socioprofessionnelle en 18 postes (profession actuelle ou dernière profession)
+
+Orig. Value    New Value      Label
+666            .A             Non concerné
+999            .B             N'a pas répondu
+
+
+eayy_PCS6  Groupe socioprofessionnel en 6 postes (profession actuelle ou dernière profession)
+
+Orig. Value    New Value      Label
+666            .A             Non concerné
+999            .B             N'a pas répondu
+
+
+eayy_PCS6CJT  Groupe socioprofessionnel en 6 postes (profession actuelle ou dernière profession) (conjoint)
+
+Orig. Value    New Value      Label
+666            .A             Non concerné
+999            .B             N'a pas répondu
+
+

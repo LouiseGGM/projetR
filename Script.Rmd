@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
 library(tidyse)
 ```
 ```{r importation données}
+strwd("C:\Users\louis\Documents\GitHub\projetR\data")
 coco1 <- 
 ```
 
