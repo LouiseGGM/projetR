@@ -1,0 +1,25 @@
+---
+title: "Script"
+author: "LouiseLisaElie"
+date: 'Dernière modification: `r format(Sys.Date(), format="%d/%m/%Y")`'
+output: 
+  html_document:
+    number_sections: yes # pour ajouter des numéros aux titres
+    toc: yes # ajout d'une table des matières
+    toc_depth : '3' # Précision de la table des matières
+    folding_code : hide # Cacher le code par défaut
+    toc_float: true # Laisser la table des matières constamment visible
+abstract: "Le lien social au début de la pandémie de covid19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
+```
+
+```{r packages}
+library(tidyse)
+```
+```{r importation données}
+coco1 <- 
+```
+
