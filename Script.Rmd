@@ -31,6 +31,6 @@ coco3a <- coco3[,!grepl("eavy", names(coco3))]
 ```
 ```{r inner join avec dplyr}
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
-cocob <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
+coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
 ```
 
