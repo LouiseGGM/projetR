@@ -9,3 +9,4 @@ left join avec dplyr : dplyr::left_join(base1, base2)
 si pas de réponse à ay regarder sur la colonne suivante
 
 Recoder en utilisant Rbase coco1$coco1_q37[coco1$coco1_q37 %in% c("1","2","3")]<-"Congés maladie parental"
+Recoder les NA coco1$score[is.na(coco1$q28) | is.na(coco1$q29) | is.na(coco1$q31)]<-NA
