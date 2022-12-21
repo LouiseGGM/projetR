@@ -26,7 +26,13 @@ coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.20
 ```
 Entre coco1 et coco2 on perd 31 var, pour coco3 on en a une de plus que dans coco1
 ```{r merge}
+names(coco1)
+names(coco2)
+names(coco3)
+cocoa <- merge(x=coco1, y=coco2, by="UID_ANONYM_COVID")
+cocob <- merge(x=cocoa, y coco3, by="UID_ANONYM_COVID")
 
+#Si on retrouve les ind dans au moins une des trois bases on le garde
+#
 ```
-On a parlé de faire un full join 
 
