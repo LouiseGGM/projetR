@@ -11,4 +11,9 @@ si pas de réponse à ay regarder sur la colonne suivante
 Recoder en utilisant Rbase coco1$coco1_q37[coco1$coco1_q37 %in% c("1","2","3")]<-"Congés maladie parental"
 Recoder les NA coco1$score[is.na(coco1$q28) | is.na(coco1$q29) | is.na(coco1$q31)]<-NA
 
-{}
+{}[]
+
+Pour garder les col qui ont le nom coco2 (sup aussi l'id)
+coco2a <- coco2[,grepl("coco2", names(coco2))]
+Pour sup les col qui ont le noms eavy (pour garder l'id)
+coco2a <- coco2[,!grepl("eayy", names(coco2))]
