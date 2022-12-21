@@ -27,8 +27,8 @@ coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.20
 coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
 ```
 ```{r nettoyage base 2 et 3}
-coco2a <- coco2[,grep("coco2", coco2)]
-coco3a <- coco3[,grep("coco3", coco3)]
+coco2a <- coco2[,grepl("coco2", coco2)]
+coco3a <- coco3[,grepl("coco3", coco3)]
 ```
 ```{r inner join avec dplyr}
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
