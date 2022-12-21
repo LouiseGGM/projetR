@@ -27,17 +27,14 @@ coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.20
 coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
 ```
 Entre coco1 et coco2 on perd 31 var, pour coco3 on en a une de plus que dans coco1
-```{r inner join}
+```{r inner join avec dplyr}
 names(coco1)
 names(coco2)
 names(coco3)
 cocoa <- inner_join(x=coco1, y=coco2, by="UID_ANONYM_COVID")
 cocob <- inner_join(x=cocoa, y coco3, by="UID_ANONYM_COVID")
 
-#Si on retrouve les ind dans au moins une des trois bases on le garde
-if (reponse1) {
 
-}
 
 ```
 
