@@ -28,9 +28,11 @@ coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.20
 ```{r nettoyage base 2 et 3}
 coco2a <- coco2[,!grepl("eavy", names(coco2))]
 coco3a <- coco3[,!grepl("eavy", names(coco3))]
+rm(coco1, coco2, coco3)
 ```
 ```{r inner join avec dplyr}
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
 coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
+rm(cocoa, coco3a, coco2a)
 ```
 
