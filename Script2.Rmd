@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
 library(tidyselect)
 library(dplyr)
 library(tidyverse)
+library(questionr)
 ```
 ```{r importation données}
 coco1 <- read.csv("data/coco1_2020/donnees_coco1/csv_coco1/fr.cdsp.ddi.elipss.202004coco1.csv", stringsAsFactors = F)
@@ -29,10 +30,27 @@ coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.20
 ```{r nettoyage base 2 et 3}
 coco2a <- coco2[,!grepl("eavy", names(coco2))]
 coco3a <- coco3[,!grepl("eavy", names(coco3))]
-rm(coco1, coco2, coco3)
+rm(coco2, coco3)
 ```
 ```{r inner join avec dplyr}
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
 coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
-rm(cocoa, coco3a, coco2a)
+rm(coco1, cocoa, coco3a, coco2a)
 ```
+#Exploration hypothèse 1 :
+```{r}
+# coco1_q28 --> nb d'ordi /!\ Score d'équipement numérique
+freq(coco$coco1_q28)
+# coco1_q29 --> nb de smartphone/tablette /!\ Score d'équipement numérique
+freq(coco$coco1_q29)
+# coco1_q31 --> bonne connexion internet /!\ Score d'équipement numérique
+# coco1_q47 --> fréquences des sorties
+# coco1_q52_1 --> fréquence des rencontres avec des amis dans la vie réelle /!\ combiner famille et amis 
+# coco1_q52_2 --> fréquence des rencontres avec des amis virtuellement
+# coco1_q59_7 --> temps consacré à parler au telephone
+# coco1_q59_8 --> temps consacré à utiliser les réseau sociaux
+# coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
+# coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
+# eayy_A2A_rec --> Age quinquennal
+```
+
