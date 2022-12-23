@@ -46,6 +46,8 @@ freq(coco$coco1_q31) #mod 1, 2 et 6666
 # freq(coco$coco1_score_num)
 
 #reçu de l'aide
+class(coco$coco1_q54) #NULL
+
 coco$coco1_q54 [coco$coco1_q54_1==1 | coco$coco1_q54_2==1 | coco$coco1_q54_3==1 |
                   coco$coco1_q54_4==1 | coco$coco1_q54_5==1 | coco$coco1_q54_6==1 |
                   coco$coco1_q54_7==1 ] <- "OUI"
@@ -62,6 +64,8 @@ coco$coco1_q54_bis [coco$coco1_q54_bis_1==1 | coco$coco1_q54_bis_2==1 | coco$coc
 coco$coco1_q54_bis [coco$coco1_q54_bis_8==1] <- "NON"
 coco$coco1_q54_bis[is.na(coco$coco1_q54_bis)]<-"NON"
 freq(coco$coco1_q54_bis)
+class(coco$coco1_q54_bis) #NULL
+
 
 # coco1_q52_1 --> fréquence des rencontres avec des amis dans la vie réelle /!\ combiner famille et amis 
 # coco1_q52_2 --> fréquence des rencontres avec des amis virtuellement
