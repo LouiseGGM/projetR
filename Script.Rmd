@@ -15,7 +15,6 @@ abstract: "Le lien social au début de la pandémie de covid19"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
 ```
-
 ```{r packages}
 library(tidyselect)
 library(dplyr)
@@ -36,3 +35,7 @@ cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
 coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
 rm(cocoa, coco3a, coco2a)
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> c4dc74ab76fea060a634e50cfca82e5e616ee0c2

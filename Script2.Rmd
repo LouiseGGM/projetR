@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Script"
 author: "LouiseLisaElie"
@@ -54,3 +55,43 @@ freq(coco$coco1_q29)
 # eayy_A2A_rec --> Age quinquennal
 ```
 
+=======
+---
+title: "Script"
+author: "LouiseLisaElie"
+date: 'Dernière modification: `r format(Sys.Date(), format="%d/%m/%Y")`'
+output: 
+  html_document:
+    number_sections: yes # pour ajouter des numéros aux titres
+    toc: yes # ajout d'une table des matières
+    toc_depth : '3' # Précision de la table des matières
+    folding_code : hide # Cacher le code par défaut
+    toc_float: true # Laisser la table des matières constamment visible
+abstract: "Le lien social au début de la pandémie de covid19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
+```
+
+```{r packages}
+library(tidyselect)
+library(dplyr)
+library(tidyverse)
+```
+```{r importation données}
+coco1 <- read.csv("data/coco1_2020/donnees_coco1/csv_coco1/fr.cdsp.ddi.elipss.202004coco1.csv", stringsAsFactors = F)
+coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.202004.csv", stringsAsFactors = F)
+coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
+```
+```{r nettoyage base 2 et 3}
+coco2a <- coco2[,!grepl("eavy", names(coco2))]
+coco3a <- coco3[,!grepl("eavy", names(coco3))]
+rm(coco1, coco2, coco3)
+```
+```{r inner join avec dplyr}
+cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
+coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
+rm(cocoa, coco3a, coco2a)
+```
+>>>>>>> c4dc74ab76fea060a634e50cfca82e5e616ee0c2
