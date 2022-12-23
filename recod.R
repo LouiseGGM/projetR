@@ -14,7 +14,7 @@ coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3
 
 coco$coco1_q28[coco$coco1_q28 %in% c("1","2","3")]<-"Congés maladie parental"
 table(coco$coco1_q37)
-freq(coco$coco1_q23)
+freq(coco$coco1_q23) #recodage n'a pas fonctionné
 
 # coco1_q28 --> nb d'ordi /!\ Score d'éqyupement numérique
 # coco1_q29 --> nb de smartphone/tablette /!\ Score d'éqyupement numérique
@@ -22,19 +22,22 @@ freq(coco$coco1_q23)
 
 
 #nb d'ordi par personne
-class(coco$coco1_q23)
-coco$coco1_q28 <- as.numeric(coco$coco1_q28)
-freq(coco$coco1_q28)
+class(coco$coco1_q28) #class character
+coco$coco1_q28 <- as.factor(coco$coco1_q28) #devient un factor
+freq(coco$coco1_q28) #modalités 4,5,6, 9999 + NA
 
 coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
-freq(coco$coco1_q28_rap)
+#  Warning : ‘/’ n'est pas pertinent pour des variables facteurs
+
+freq(coco$coco1_q28_rap) #847 NA
+
 #en dessous de 1 ordi pour trois --> 0
 #moins de 1 --> 1
 #1 (inclu) --> 2
 
 #nb de smartphone par personne
 coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
-freq(coco$coco1_q31)
+freq(coco$coco1_q31) #mod 1, 2 et 6666
 
 #internet --> on peu pas parce que c'est une question filtre
 # coco$coco1_q31[coco$coco1_q31 %in% c(2)]<-0
