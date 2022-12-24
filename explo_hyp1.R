@@ -6,6 +6,16 @@ library(dplyr)
 library(tidyverse)
 library(questionr)
 
+#score d'équipement numérique 
+#q_28 et q_29
+
+# coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
+freq(coco$coco1_q47)
+# coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
+freq(coco$coco1_q47)
+
+#avec age
+
 #Nombre de personnes vivant dans le logement 
 freq(coco$coco1_q23)
 coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3, surtout que ne concerne q'un enquêté.e
