@@ -6,28 +6,59 @@ library(dplyr)
 library(tidyverse)
 library(questionr)
 
+
+# eayy_A2A_rec --> Age quinquennal
+freq(coco$eayy_A2A_rec)
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("1","2","3","4",'5')]<-"Moins 29 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("6","7")]<-"30-39 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("8","9")]<-"40-49 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("10","11")]<-"50-59 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("12","12")]<-"60-69 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("13","14")]<-"Plus de 70 ans"
+
+#Mettre dans l'ordre les modalités
+class(coco$eayy_A2A_rec)
+coco$eayy_A2A_rec<- as.factor(coco$eayy_A2A_rec)
+levels(coco$eayy_A2A_rec)
+age_rec <- factor(coco$eayy_A2A_rec, c("Moins 29 ans","30-39 ans","40-49 ans","50-59 ans","60-69 ans","Plus de 70 ans"))
+freq(age_rec)
+
 #score d'équipement numérique 
 #q_28 et q_29
 
 # coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
-freq(coco$coco1_q47)
-# coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
-freq(coco$coco1_q47)
+freq(coco$coco1_q61_7)
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("1","2")]<-"Moins que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("3")]<-"Autant que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("4","5")]<-"Plus que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("6","9999")]<-"NC ou NA"
+coco$coco1_q61_7<- as.factor(coco$coco1_q61_7)
+levels(coco$coco1_q61_7)
+coco$coco1_q61_7 <- factor(coco$coco1_q61_7, c("Moins que d'habitude","Autant que d'habitude", "Plus que d'habitude","NC ou NA"))
 
-#avec age
+wtd.table(age_rec, coco$coco1_q61_7, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+# coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
+freq(coco$coco1_q61_8)
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("1","2")]<-"Moins que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("3")]<-"Autant que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("4","5")]<-"Plus que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("6","9999")]<-"NC ou NA"
+coco$coco1_q61_8<- as.factor(coco$coco1_q61_8)
+levels(coco$coco1_q61_8)
+coco$coco1_q61_8 <- factor(coco$coco1_q61_8, c("Moins que d'habitude","Autant que d'habitude", "Plus que d'habitude","NC ou NA"))
+
+wtd.table(age_rec, coco$coco1_q61_8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
 
 #Nombre de personnes vivant dans le logement 
 freq(coco$coco1_q23)
 coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3, surtout que ne concerne q'un enquêté.e
 #Peu de ménages comptent plus de 4 individus
 #La plus grande part des foyers sont des ménages de 2 personnes : couple ou parent solo+enf
-
-# eayy_A2A_rec --> Age quinquennal
-freq(coco$eayy_A2A_rec)
-coco$Age_rec <- fct_collapse(factor(coco$eayy_A2A_rec),"-24"="4","25-29"="5",
-                             "30-34"="6","35-39"="7", "40-44"="8", "45-49"="9", "50-54"="10",
-                             "55-59"="11", "60-64"="12", "65-79"="13", "+70"="14")
-
 
 # coco1_q28 --> nb d'ordi /!\ Score d'équipement numérique
 freq(coco$coco1_q28)
@@ -77,22 +108,23 @@ addmargins(table(coco$eayy_A2A_rec,coco$coco1_q29))
 
 
 #repartition proche entre avant et après
-#fréquence de visite des ami.e.s
-# coco1_q52_1 --> fréquence des rencontres avec des amis dans la vie réelle /!\ combiner famille et amis 
+# coco1_q47 --> fréquences des sorties au cours des deux dernières semaines
 freq(coco$coco1_q47)
 
+# coco1_q52_1 --> fréquence des rencontres avec des amis dans la vie réelle /!\ combiner famille et amis 
+freq(coco$coco1_q52_1)
 # coco1_q52_2 --> fréquence des rencontres avec des amis virtuellement
-freq(coco$coco1_q47)
+freq(coco$coco1_q52_2)
 
 # coco1_q59_7 --> temps consacré à parler au telephone
-freq(coco$coco1_q47)
+freq(coco$coco1_q59_7)
 
 # coco1_q59_8 --> temps consacré à utiliser les réseau sociaux
-freq(coco$coco1_q47)
+freq(coco$coco1_q59_8)
 
 # coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
-freq(coco$coco1_q47)
+freq(coco$coco1_q61_7)
 
 # coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
-freq(coco$coco1_q47)
+freq(coco$coco1_q61_8)
 
