@@ -38,7 +38,7 @@ coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
 rm(coco1, cocoa, coco3a, coco2a)
 ```
 #Exploration hypothèse 1 :
-```{r}
+```{r rec age}
 # eayy_A2A_rec --> Age quinquennal
 freq(coco$eayy_A2A_rec)
 coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("1","2","3","4",'5')]<-"Moins 29 ans"
@@ -55,12 +55,12 @@ age_rec <- factor(coco$eayy_A2A_rec, c("Moins 29 ans","30-39 ans","40-49 ans","5
 freq(age_rec)
 ```
 
-```{r}
+```{r score equip num}
 #score d'équipement numérique 
 #q_28 et q_29
 ```
 
-```{r}
+```{r rec tel}
 # coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
 freq(coco$coco1_q61_7)
 coco$coco1_q61_7[coco$coco1_q61_7 %in% c("1","2")]<-"Moins que d'habitude"
@@ -84,7 +84,7 @@ Les 40-49 ans : autant voir plus  : 188% et 19.4%
 Les 50-59 ans déclarent moins téléphoner que d'habitude : 38,7 %, contre 20.4% plus que d'habitude
 Les 60-69 ans représentent 10 % des répondants "plus que d'habitude"
 Les plus de 70 ans sont également répartis quelque soit le temps d'usages'usage du téléphon : entre 29.3 et 39.3%
-```{r}
+```{r tab inv tel}
 wtd.table(coco$coco1_q61_7, age_rec,
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
@@ -97,7 +97,7 @@ Parmi les moins de 29 : 64% téléphone plus que d'habitude
 60-69 : 67.7% déclarent plus que d'habitude, 29,5 % autant que d'hab
 +de 70 : 57.3% déclarent plus que d'habitude, 33,9 % autant que d'hab
 
-```{r}
+```{r rec RS}
 # coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
 freq(coco$coco1_q61_8)
 coco$coco1_q61_8[coco$coco1_q61_8 %in% c("1","2")]<-"Moins que d'habitude"
@@ -113,7 +113,7 @@ wtd.table(age_rec, coco$coco1_q61_8,
   cprop(digits=1)
 #age en ligne, habitudes en colonne
 ```
-```{r réseaux so}
+```{r tab inv RS}
 wtd.table(coco$coco1_q61_8, age_rec,
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
@@ -126,12 +126,31 @@ Parmi les 50-59 : Près de la moitié : usage plus important, plus d'un quart au
 Parmi les 60-69 : 43.7 % plus que d'hab et 31,7 % autant que d'hab
 Parmi les plus de 70 ans : 32,4% plus que d'hab et 38.5 autant, notons que plus d'1/4 est en NA ou NC
 
-```{r}
+```{r logement}
 #Nombre de personnes vivant dans le logement 
 freq(coco$coco1_q23)
 coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3, surtout que ne concerne q'un enquêté.e
 #Peu de ménages comptent plus de 4 individus
 #La plus grande part des foyers sont des ménages de 2 personnes : couple ou parent solo+enf
+```
+
+```{r ordi}
+#EN COURS 
+
+#nb d'ordi par personne
+class(coco$coco1_q23)
+coco$coco1_q28 <- as.numeric(coco$coco1_q28)
+freq(coco$coco1_q28)
+
+coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
+freq(coco$coco1_q28_rap)
+#en dessous de 1 ordi pour trois --> 0
+#moins de 1 --> 1
+#1 (inclu) --> 2
+
+#nb de smartphone par personne
+coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
+freq(coco$coco1_q31)
 
 # coco1_q28 --> nb d'ordi /!\ Score d'équipement numérique
 freq(coco$coco1_q28)
@@ -146,8 +165,9 @@ addmargins(table(coco$coco1_q23, coco$coco1_q28))
     # logique si on pense aux familles 
 
 rtable(table(coco$eayy_A2A_rec,coco$coco1_q28))
+```
 
-
+```{r}
 # coco1_q29 --> nb de smartphone/tablette /!\ Score d'équipement numérique
 freq(coco$coco1_q29)
 median(coco$coco1_q29) #mediane : 4

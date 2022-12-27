@@ -40,6 +40,8 @@ wtd.table(age_rec, coco$coco1_q61_7,
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
 
+
+
 # coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
 freq(coco$coco1_q61_8)
 coco$coco1_q61_8[coco$coco1_q61_8 %in% c("1","2")]<-"Moins que d'habitude"
