@@ -135,91 +135,116 @@ coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3, surtout qu
 ```
 
 ```{r ordi}
-#EN COURS 
-
 #nb d'ordi par personne
 class(coco$coco1_q23)
 coco$coco1_q28 <- as.numeric(coco$coco1_q28)
 freq(coco$coco1_q28)
 
+#rapport nb ordi sur nb personnes dans le ménage
 coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
 freq(coco$coco1_q28_rap)
-#en dessous de 1 ordi pour trois --> 0
-#moins de 1 --> 1
-#1 (inclu) --> 2
-
-#nb de smartphone par personne
-coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
-freq(coco$coco1_q31)
-
-# coco1_q28 --> nb d'ordi /!\ Score d'équipement numérique
-freq(coco$coco1_q28)
-#La majorité des gens ont entre 2 et 3 ordis (env 68%)
-
+coco$coco1_q28_score <- case_when(coco$coco1_q28_rap<0.5 ~ "Moins de 1/3 pers",
+                                  coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
+                                  coco$coco1_q28_rap==1 ~ "Un par pers", 
+                                  coco$coco1_q28_rap>1 ~ "Plus d'1/pers")  
+coco$coco1_q28_score <- factor(coco$coco1_q28_score,
+                       levels=c("Moins de 1/3 pers","Moins de 1/2 pers",
+                                "Un par pers","Plus d'1/pers"))
+freq(coco$coco1_q28_score)
+```
+```{r pers log}
 #tris croisés nb ordi et nb de gens par foyer
 addmargins(table(coco$coco1_q23, coco$coco1_q28))
-#En ligne le nb de pers / foyer et en col le nb d'ordi
-#Parmi les 175 pers vivant seule, 119 ont 2 ordinateurs
-#les pers vivant à 2 ont entre 2 et 3 ordi (respectivement 144,139)
-#le nombre de personnes vivant dans le foyer augmentant, le nb d'ordi stagne autour de 3, 
-    # logique si on pense aux familles 
+```
+En ligne le nb de pers / foyer et en col le nb d'ordi
+Parmi les 175 pers vivant seule, 119 ont 2 ordinateurs
+les pers vivant à 2 ont entre 2 et 3 ordi (respectivement 144,139)
+le nombre de personnes vivant dans le foyer augmentant, le nb d'ordi stagne autour de 3, 
+logique si on pense aux familles 
 
-rtable(table(coco$eayy_A2A_rec,coco$coco1_q28))
+```{r ordi pond}
+wtd.table(age_rec, coco$coco1_q28_score, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#age en ligne, score ordi en colonne
 ```
 
-```{r}
-# coco1_q29 --> nb de smartphone/tablette /!\ Score d'équipement numérique
-freq(coco$coco1_q29)
-median(coco$coco1_q29) #mediane : 4
-mean(coco$coco1_q29) #Moyenne de 51 ???
-#53 % des gens ont entre 3 et 4 smartphones et/ ou tablettes
 
+```{r tab pond inv ordi}
+wtd.table(coco$coco1_q28_score, age_rec,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#score ordi en ligne et age en col  
+```
+
+```{r tablette}
+class(coco$coco1_q29)
+coco$coco1_q29 <- as.numeric(coco$coco1_q29)
+freq(coco$coco1_q29)
+
+#rapport nb smartphones/tablettes sur nb personnes dans le ménage
+coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
+freq(coco$coco1_q29_rap)
+coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.33 ~ "4 outils pour 3 ou -",
+                                  coco$coco1_q29_rap<1.5 ~ "4 outils pour 2",
+                                  coco$coco1_q29_rap==2 ~ "2 outils/pers", 
+                                  coco$coco1_q29_rap>2 ~ "+ de 2/pers")  
+coco$coco1_q29_score <- factor(coco$coco1_q29_score,
+                       levels=c("4 outils pour 3 ou -","4 outils pour 2",
+                                "2 outils/pers","+ de 2/pers"))
+freq(coco$coco1_q29_score)
+```
+
+```{r tablette age et nb pers}
+addmargins(table(age_rec,coco$coco1_q29))
+#Les plus de 70 ans sont bien équipés en smartphones et tablettes (2,3,4), ce sont eux qui répondent le plus
+#Les 35-60 sont les plus équipés en nombre par foyers
 #tris croisés nb smartphones/tab et nb de gens par foyer
+
 addmargins(table(coco$coco1_q23, coco$coco1_q29))
 #En ligne le nb de pers / foyer et en col le nb d'ordi
 #La majorité des consommateurs de téléphone / tablette sont les foyers de 2 pers
 #Ils en ont entre 3 et 4 soit un smartphone chacun + 1 tablette pour 2 ou une chacun
 #Le score d'équipement numérique est plus sensible à l'augmentation du nombre de personne dans le foyer.
 #Les valeurs sont plus répartis que dans le cas des ordinateurs.
+```
 
-addmargins(table(coco$eayy_A2A_rec,coco$coco1_q29))
-#Les plus de 70 ans sont bien équipés en smartphones et tablettes (2,3,4), ce sont eux qui répondent le plus
-#Les 35-60 sont les plus équipés en nombre par foyers
+```{r tab pond}
+wtd.table(age_rec, coco$coco1_q29_score, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#age en ligne, score tablette en colonne
+```
 
+```{r tab inv tablette}
+wtd.table(coco$coco1_q29_score, age_rec,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#score tablette en ligne et age en col 
+```
 
-# coco1_q31 --> bonne connexion internet /!\ Score d'équipement numérique
-freq(coco$coco1_q31)
-#Beaucoup de NR : 282 6666 soit 33.3% de NR
-
+```{r}
 # coco1_q47 --> fréquences des sorties au cours des 2 dernières semaines
 freq(coco$coco1_q47)
 freq(coco$coco2_q47)
 freq(coco$coco3_q47)
-
-addmargins(table(coco$coco1_q23,coco$coco1_q29))
-addmargins(table(coco$eayy_A2A_rec,coco$coco1_q29))
-
-
-#repartition proche entre avant et après
-# coco1_q47 --> fréquences des sorties au cours des deux dernières semaines
-freq(coco$coco1_q47)
 
 # coco1_q52_1 --> fréquence des rencontres avec des amis dans la vie réelle /!\ combiner famille et amis 
 freq(coco$coco1_q52_1)
 # coco1_q52_2 --> fréquence des rencontres avec des amis virtuellement
 freq(coco$coco1_q52_2)
 
-# coco1_q59_7 --> temps consacré à parler au telephone
+# coco1_q59_7 --> temps consacré à parler au téléphone
 freq(coco$coco1_q59_7)
 
 # coco1_q59_8 --> temps consacré à utiliser les réseau sociaux
 freq(coco$coco1_q59_8)
 
-# coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
-freq(coco$coco1_q61_7)
+# coco1_q31 --> bonne connexion internet 
+freq(coco$coco1_q31)
+#Beaucoup de NR : 282 6666 soit 33.3% de NR
 
-# coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
-freq(coco$coco1_q61_8)
+
 
 ```
 
