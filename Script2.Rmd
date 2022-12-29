@@ -26,18 +26,160 @@ library(questionr)
 coco1 <- read.csv("data/coco1_2020/donnees_coco1/csv_coco1/fr.cdsp.ddi.elipss.202004coco1.csv", stringsAsFactors = F)
 coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.202004.csv", stringsAsFactors = F)
 coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
-```
-```{r nettoyage base 2 et 3}
 coco2a <- coco2[,!grepl("eavy", names(coco2))]
 coco3a <- coco3[,!grepl("eavy", names(coco3))]
 rm(coco2, coco3)
-```
-```{r inner join avec dplyr}
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
 coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
 rm(coco1, cocoa, coco3a, coco2a)
 ```
+
+```{r}
+#Fréquence des rencontres avec des amis dans la vie réelle
+freq(coco$coco1_q52_1)
+freq(coco$coco2_q52_1)
+freq(coco$coco3_q52_1)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_1_1[coco$coco1_q52_1<=4]<-"Oui"
+coco$q52_1_1[coco$coco1_q52_1==5]<-"Non"
+coco$q52_1_2[coco$coco2_q52_1<=4]<-"Oui"
+coco$q52_1_2[coco$coco2_q52_1==5]<-"Non"
+coco$q52_1_3[coco$coco3_q52_1<=4]<-"Oui"
+coco$q52_1_3[coco$coco3_q52_1==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_1_long<-NULL
+coco$q52_1_long[coco$q52_1_1=="Oui" | coco$q52_1_2=="Oui" | coco$q52_1_3=="Oui"]<-"Oui"
+coco$q52_1_long[is.na(coco$q52_1_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_1_long)
+
+#Fréquence des rencontres avec des amis dans la vie virtuelle
+freq(coco$coco1_q52_2)
+freq(coco$coco2_q52_2)
+freq(coco$coco3_q52_2)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_2_1[coco$coco1_q52_2<=4]<-"Oui"
+coco$q52_2_1[coco$coco1_q52_2==5]<-"Non"
+coco$q52_2_2[coco$coco2_q52_2<=4]<-"Oui"
+coco$q52_2_2[coco$coco2_q52_2==5]<-"Non"
+coco$q52_2_3[coco$coco3_q52_2<=4]<-"Oui"
+coco$q52_2_3[coco$coco3_q52_2==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_2_long<-NULL
+coco$q52_2_long[coco$q52_2_1=="Oui" | coco$q52_2_2=="Oui" | coco$q52_2_3=="Oui"]<-"Oui"
+coco$q52_2_long[is.na(coco$q52_2_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_2_long)
+
+# Fréquence des rencontres avec la famille dans la vie réelle
+freq(coco$coco1_q52_3)
+freq(coco$coco2_q52_3)
+freq(coco$coco3_q52_3)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_3_1[coco$coco1_q52_3<=4]<-"Oui"
+coco$q52_3_1[coco$coco1_q52_3==5]<-"Non"
+coco$q52_3_2[coco$coco2_q52_3<=4]<-"Oui"
+coco$q52_3_2[coco$coco2_q52_3==5]<-"Non"
+coco$q52_3_3[coco$coco3_q52_3<=4]<-"Oui"
+coco$q52_3_3[coco$coco3_q52_3==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_3_long<-NULL
+coco$q52_3_long[coco$q52_3_1=="Oui" | coco$q52_3_2=="Oui" | coco$q52_3_3=="Oui"]<-"Oui"
+coco$q52_3_long[is.na(coco$q52_3_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+freq(coco$q52_3_long)
+
+#Fréquence des rencontres avec la famille par rencontre virtuelle
+freq(coco$coco1_q52_4)
+freq(coco$coco2_q52_4)
+freq(coco$coco3_q52_4)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_4_1[coco$coco1_q52_4<=4]<-"Oui"
+coco$q52_4_1[coco$coco1_q52_4==5]<-"Non"
+coco$q52_4_2[coco$coco2_q52_4<=4]<-"Oui"
+coco$q52_4_2[coco$coco2_q52_4==5]<-"Non"
+coco$q52_4_3[coco$coco3_q52_4<=4]<-"Oui"
+coco$q52_4_3[coco$coco3_q52_4==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un
+coco$q52_4_long<-NULL
+coco$q52_4_long[coco$q52_4_1=="Oui" | coco$q52_4_2=="Oui" | coco$q52_4_3=="Oui"]<-"Oui"
+coco$q52_4_long[is.na(coco$q52_4_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_4_long)
+
+
+
+#IRL
+coco$q52_irl<-NULL
+coco$q52_irl[coco$q52_1_long=="Non" & coco$q52_3_long=="Non"]<-"Non"
+coco$q52_irl[coco$q52_1_long=="Oui" | coco$q52_3_long=="Oui"]<-"Oui"
+
+freq(coco$q52_irl)
+
+
+#Virtuel
+coco$q52_vir<-NULL
+coco$q52_vir[coco$q52_2_long=="Non" & coco$q52_4_long=="Non"]<-"Non"
+coco$q52_vir[coco$q52_2_long=="Oui" | coco$q52_4_long=="Oui"]<-"Oui"
+
+freq(coco$q52_vir)
+
+#Pour coco1
+coco$q52_irl_1<-NULL
+coco$q52_irl_1[coco$q52_1_1=="Non" & coco$q52_3_1=="Non"]<-"Non"
+coco$q52_irl_1[coco$q52_1_1=="Oui" | coco$q52_3_1=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_1)
+
+#Pour coco1
+coco$q52_vir_1<-NULL
+coco$q52_vir_1[coco$q52_2_1=="Non" & coco$q52_4_1=="Non"]<-"Non"
+coco$q52_vir_1[coco$q52_2_1=="Oui" | coco$q52_4_1=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_1)
+
+#Pour coco2
+coco$q52_irl_2<-NULL
+coco$q52_irl_2[coco$q52_1_2=="Non" & coco$q52_3_2=="Non"]<-"Non"
+coco$q52_irl_2[coco$q52_1_2=="Oui" | coco$q52_3_2=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_2)
+
+#Pour coco2
+coco$q52_vir_2<-NULL
+coco$q52_vir_2[coco$q52_2_2=="Non" & coco$q52_4_2=="Non"]<-"Non"
+coco$q52_vir_2[coco$q52_2_2=="Oui" | coco$q52_4_2=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_2)
+
+#Pour coco3
+coco$q52_irl_3<-NULL
+coco$q52_irl_3[coco$q52_1_3=="Non" & coco$q52_3_3=="Non"]<-"Non"
+coco$q52_irl_3[coco$q52_1_3=="Oui" | coco$q52_3_3=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_3)
+
+#Pour coco3
+coco$q52_vir_3<-NULL
+coco$q52_vir_3[coco$q52_2_3=="Non" & coco$q52_4_3=="Non"]<-"Non"
+coco$q52_vir_3[coco$q52_2_3=="Oui" | coco$q52_4_3=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_3)
+
+
+```
+
+
 #Exploration hypothèse 1 :
+La technologie a permis le maintien d’un certain lien social, 
+mais son visage reste différentiel selon l’âge. → bon maintien jusqu’à 40 ans.
 ```{r rec age}
 # eayy_A2A_rec --> Age quinquennal
 freq(coco$eayy_A2A_rec)
@@ -97,6 +239,57 @@ Parmi les moins de 29 : 64% téléphone plus que d'habitude
 60-69 : 67.7% déclarent plus que d'habitude, 29,5 % autant que d'hab
 +de 70 : 57.3% déclarent plus que d'habitude, 33,9 % autant que d'hab
 
+```{r Fréquence des rencontres avec des amis dans la vie réelle}
+#l'enquêté a vu quelqu'un ou non cumulés pour les trois vagues
+freq(coco$q52_1_long)
+wtd.table(coco$coco1_q61_7, coco$q52_1_long,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+Parmi les personnes n'ayant vu personnes au cours des 3 vagues, 62.9% déclarent téléphoner plus que d'habitude, ils sont moins nombreux à déclarer un usage inchangé que ceux ayant vu des gens durant ces mêmes vagues. Ils sont aussi moins nombreux a déclarer moins téléphoner.
+
+```{r Fréquence des rencontres avec des amis dans la vie virtuelle}
+freq(coco$q52_2_long)
+wtd.table(coco$coco1_q61_7, coco$q52_2_long,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+
+
+```{r Fréquence des rencontres avec la famille dans la vie réelle}
+freq(coco$q52_3_long)
+wtd.table(coco$coco1_q61_7, coco$q52_1_long,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+
+
+```{r Fréquence des rencontres avec la famille par rencontre virtuelle}
+freq(coco$q52_4_long)
+wtd.table(coco$coco1_q61_7, coco$q52_1_long,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+
+```{r}
+#rencontres IRL
+freq(coco$q52_irl)
+wtd.table(coco$coco1_q61_7, coco$q52_irl,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#rencontres virtuelle
+freq(coco$q52_vir)
+wtd.table(coco$coco1_q61_7, coco$q52_vir,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+Ceux déclarant ne pas rencontrer leur famille et amis dans IRL téléphonent plus que d'habitude
+Notons tout de même que ceux déclarant rencontrer leurs famille et amis présentent un % élevé d'utilisation plus importante que d'habitude du fait dde téléphoner. 59 vs 61%
+
+Ceux déclarant ne pas rencontrer leur famille et amis virtuellement semblent mois téléphoner que ceux les rencontrant. Vraie différencent de %
+
+
 ```{r rec RS}
 # coco1_q61_8 --> temps consacré par rappport à d'habitude à utiliser les réseau sociaux
 freq(coco$coco1_q61_8)
@@ -125,6 +318,21 @@ Parmi les 40-49 : Plus de la moitié déclarent un usage plus important que d'ha
 Parmi les 50-59 : Près de la moitié : usage plus important, plus d'un quart autant que d'hab
 Parmi les 60-69 : 43.7 % plus que d'hab et 31,7 % autant que d'hab
 Parmi les plus de 70 ans : 32,4% plus que d'hab et 38.5 autant, notons que plus d'1/4 est en NA ou NC
+```{r fq rencontres}
+#rencontres IRL
+freq(coco$q52_irl)
+wtd.table(coco$coco1_q61_8, coco$q52_irl,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#rencontres virtuelle
+freq(coco$q52_vir)
+wtd.table(coco$coco1_q61_8, coco$q52_vir,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+L'usage des RS ne semblent pas changer si l'enquêté voit dans la vraie vie sa famille et amis : usage faiblement différencié 
+Les enquêtés rencontrant leurs proches virtuellement, ont une utilisation fortement différenciée des RS, 49.2% d'entre elleux déclarent les utilsier plus que d'habitude, contre 8.5% chez ceux ne rencontrant pas leur famille virtuellement.
 
 ```{r logement}
 #Nombre de personnes vivant dans le logement 
@@ -177,6 +385,23 @@ wtd.table(coco$coco1_q28_score, age_rec,
 #score ordi en ligne et age en col  
 ```
 
+```{r}
+#rencontres IRL
+freq(coco$q52_irl)
+wtd.table(coco$coco1_q28_score, coco$q52_irl,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#rencontres virtuelle
+freq(coco$q52_vir)
+wtd.table(coco$coco1_q28_score, coco$q52_vir,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+ Parmi les personnes rencontrant leurs proches virtuellement, 79.8% ont au moins un ordinateur par personne
+ Mais ne semble pas significatif, 86,7% de ceux ne rencontrant pas leurs proches en virtuelle ont un ordi ou plus par personne.
+ Le fait de voir ses proches ou non ne relève pas d'un problème matériel.
+
 ```{r tablette}
 class(coco$coco1_q29)
 coco$coco1_q29 <- as.numeric(coco$coco1_q29)
@@ -185,13 +410,10 @@ freq(coco$coco1_q29)
 #rapport nb smartphones/tablettes sur nb personnes dans le ménage
 coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
 freq(coco$coco1_q29_rap)
-coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.33 ~ "4 outils pour 3 ou -",
-                                  coco$coco1_q29_rap<1.5 ~ "4 outils pour 2",
-                                  coco$coco1_q29_rap==2 ~ "2 outils/pers", 
-                                  coco$coco1_q29_rap>2 ~ "+ de 2/pers")  
+coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.5 ~ "partage des outils",
+                                  coco$coco1_q29_rap==2 ~ "2 et + par pers")  
 coco$coco1_q29_score <- factor(coco$coco1_q29_score,
-                       levels=c("4 outils pour 3 ou -","4 outils pour 2",
-                                "2 outils/pers","+ de 2/pers"))
+                       levels=c("partage des outils","2 et + par pers"))
 freq(coco$coco1_q29_score)
 ```
 
@@ -222,10 +444,60 @@ wtd.table(coco$coco1_q29_score, age_rec,
   cprop(digits=1)
 #score tablette en ligne et age en col 
 ```
-
 ```{r}
+#rencontres IRL
+wtd.table(coco$coco1_q29_score, coco$q52_irl,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#rencontres virtuelle
+wtd.table(coco$coco1_q29_score, coco$q52_vir,
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+Fort taux de NA : 31,2%
+Ne semble pas significatif
+
+```{r contact}
+class(coco$coco1_q52_rel) #NULL
+freq(coco$coco1_q52_1)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_1 %in% c("1","2") | coco$coco1_q52_3 %in% c("1","2"), 
+                             "Beaucoup de contact IRL", coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_2 %in% c("1","2") | coco$coco1_q52_4 %in% c("1","2"), 
+                             "Beaucoup de contact IVL", coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q53_1 %in% c("1","2") | coco$coco1_q53_2 %in% c("1","2")| 
+                               coco$coco1_q53_3 %in% c("1","2"), "Beaucoup de contact à l'étranger", 
+                             coco$coco1_q52_rel)
+
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_1 %in% c("3","4") | coco$coco1_q52_3 %in% c("3","4"), 
+                             "un peu de contact IRL", 
+                             coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_2 %in% c("3","4") | coco$coco1_q52_4 %in% c("3","4"), 
+                             "un peu de contact IVL", 
+                             coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q53_1 %in% c("3","4") | coco$coco1_q53_2 %in% c("3","4")| 
+                               coco$coco1_q53_3 %in% c("3","4"), "un peu de contact à l'étranger", 
+                             coco$coco1_q52_rel)
+
+
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_1 == 5 | coco$coco1_q52_3 == 5, 
+                             "pas de contact", 
+                             coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q52_2 == 5 | coco$coco1_q52_4 == 5, 
+                             "pas de contact", 
+                             coco$coco1_q52_rel)
+coco$coco1_q52_rel <- ifelse(coco$coco1_q53_1 == 5 | coco$coco1_q53_2 == 5| 
+                               coco$coco1_q53_3 == 5, "pas de contact", 
+                             coco$coco1_q52_rel)
+
+coco$coco1_q52_rel[is.na(coco$coco1_q52_rel)]<-"pas de contact"
+freq(coco$coco1_q52_rel)
+```
+
+```{r variables en stock}
 # coco1_q47 --> fréquences des sorties au cours des 2 dernières semaines
 freq(coco$coco1_q47)
+
 freq(coco$coco2_q47)
 freq(coco$coco3_q47)
 

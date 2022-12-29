@@ -1,0 +1,577 @@
+---
+title: "Untitled"
+author: "Elie Carré, Louise Guilbaud et Lisa Triplet"
+output:
+  html_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: '3'
+    toc_float: true
+date: 'Dernière modification : `r format(Sys.Date(), format="%d/%m/%Y")`'
+subtitle: "Un sous-titre"
+abstract: "Un résumé"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+
+
+```{r packages}
+library(questionr)
+library(dplyr)
+library(gtsummary)
+library(rcompanion)
+library(GGally)
+```
+
+
+```{r importation}
+coco1 <- read.csv("C:/Users/tripl/Documents/TD_R_M2/Data/cdsp_coco1_2020/donnees_coco1/csv_coco1/fr.cdsp.ddi.elipss.202004coco1.csv", stringsAsFactors = F, fileEncoding="UTF-8")
+
+coco2 <- read.csv("C:/Users/tripl/Documents/TD_R_M2/Data/cdsp_coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.202004.csv", stringsAsFactors = F, fileEncoding="UTF-8")
+
+coco3 <- read.csv("C:/Users/tripl/Documents/TD_R_M2/Data/cdsp_coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F, fileEncoding="UTF-8")
+```
+
+
+
+
+```{r jointures}
+coco2a <- coco2[,!grepl("eayy", names(coco2))]
+coco3a <- coco3[,!grepl("eayy", names(coco3))]
+
+cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
+coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID") #coco est la base sur laquelle nous travaillerons
+```
+
+
+```{r}
+freq(coco$coco1_q52_1)
+freq(coco$coco2_q52_1)
+freq(coco$coco3_q52_1)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_1_1[coco$coco1_q52_1<=4]<-"Oui"
+coco$q52_1_1[coco$coco1_q52_1==5]<-"Non"
+coco$q52_1_2[coco$coco2_q52_1<=4]<-"Oui"
+coco$q52_1_2[coco$coco2_q52_1==5]<-"Non"
+coco$q52_1_3[coco$coco3_q52_1<=4]<-"Oui"
+coco$q52_1_3[coco$coco3_q52_1==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_1_long<-NULL
+coco$q52_1_long[coco$q52_1_1=="Oui" | coco$q52_1_2=="Oui" | coco$q52_1_3=="Oui"]<-"Oui"
+coco$q52_1_long[is.na(coco$q52_1_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_1_long)
+
+freq(coco$coco1_q52_2)
+freq(coco$coco2_q52_2)
+freq(coco$coco3_q52_2)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_2_1[coco$coco1_q52_2<=4]<-"Oui"
+coco$q52_2_1[coco$coco1_q52_2==5]<-"Non"
+coco$q52_2_2[coco$coco2_q52_2<=4]<-"Oui"
+coco$q52_2_2[coco$coco2_q52_2==5]<-"Non"
+coco$q52_2_3[coco$coco3_q52_2<=4]<-"Oui"
+coco$q52_2_3[coco$coco3_q52_2==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_2_long<-NULL
+coco$q52_2_long[coco$q52_2_1=="Oui" | coco$q52_2_2=="Oui" | coco$q52_2_3=="Oui"]<-"Oui"
+coco$q52_2_long[is.na(coco$q52_2_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_2_long)
+
+
+freq(coco$coco1_q52_3)
+freq(coco$coco2_q52_3)
+freq(coco$coco3_q52_3)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_3_1[coco$coco1_q52_3<=4]<-"Oui"
+coco$q52_3_1[coco$coco1_q52_3==5]<-"Non"
+coco$q52_3_2[coco$coco2_q52_3<=4]<-"Oui"
+coco$q52_3_2[coco$coco2_q52_3==5]<-"Non"
+coco$q52_3_3[coco$coco3_q52_3<=4]<-"Oui"
+coco$q52_3_3[coco$coco3_q52_3==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un 
+coco$q52_3_long<-NULL
+coco$q52_3_long[coco$q52_3_1=="Oui" | coco$q52_3_2=="Oui" | coco$q52_3_3=="Oui"]<-"Oui"
+coco$q52_3_long[is.na(coco$q52_3_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_3_long)
+
+
+freq(coco$coco1_q52_4)
+freq(coco$coco2_q52_4)
+freq(coco$coco3_q52_4)
+
+#Deux modalités : Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un. On le fait pour chaque vague
+coco$q52_4_1[coco$coco1_q52_4<=4]<-"Oui"
+coco$q52_4_1[coco$coco1_q52_4==5]<-"Non"
+coco$q52_4_2[coco$coco2_q52_4<=4]<-"Oui"
+coco$q52_4_2[coco$coco2_q52_4==5]<-"Non"
+coco$q52_4_3[coco$coco3_q52_4<=4]<-"Oui"
+coco$q52_4_3[coco$coco3_q52_4==5]<-"Non"
+
+#On combine pour les trois vagues, Oui = avoir vu quelqu'un, Non = ne pas avoir vu quelqu'un
+coco$q52_4_long<-NULL
+coco$q52_4_long[coco$q52_4_1=="Oui" | coco$q52_4_2=="Oui" | coco$q52_4_3=="Oui"]<-"Oui"
+coco$q52_4_long[is.na(coco$q52_4_long)]<-"Non" # nous choisissons d'imputer "Non" aux NA également (au nombre de 4). 
+
+freq(coco$q52_4_long)
+
+
+
+#IRL
+coco$q52_irl<-NULL
+coco$q52_irl[coco$q52_1_long=="Non" & coco$q52_3_long=="Non"]<-"Non"
+coco$q52_irl[coco$q52_1_long=="Oui" | coco$q52_3_long=="Oui"]<-"Oui"
+
+freq(coco$q52_irl)
+
+
+#Virtuel
+coco$q52_vir<-NULL
+coco$q52_vir[coco$q52_2_long=="Non" & coco$q52_4_long=="Non"]<-"Non"
+coco$q52_vir[coco$q52_2_long=="Oui" | coco$q52_4_long=="Oui"]<-"Oui"
+
+freq(coco$q52_vir)
+
+#Pour coco1
+coco$q52_irl_1<-NULL
+coco$q52_irl_1[coco$q52_1_1=="Non" & coco$q52_3_1=="Non"]<-"Non"
+coco$q52_irl_1[coco$q52_1_1=="Oui" | coco$q52_3_1=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_1)
+
+#Pour coco1
+coco$q52_vir_1<-NULL
+coco$q52_vir_1[coco$q52_2_1=="Non" & coco$q52_4_1=="Non"]<-"Non"
+coco$q52_vir_1[coco$q52_2_1=="Oui" | coco$q52_4_1=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_1)
+
+#Pour coco2
+coco$q52_irl_2<-NULL
+coco$q52_irl_2[coco$q52_1_2=="Non" & coco$q52_3_2=="Non"]<-"Non"
+coco$q52_irl_2[coco$q52_1_2=="Oui" | coco$q52_3_2=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_2)
+
+#Pour coco2
+coco$q52_vir_2<-NULL
+coco$q52_vir_2[coco$q52_2_2=="Non" & coco$q52_4_2=="Non"]<-"Non"
+coco$q52_vir_2[coco$q52_2_2=="Oui" | coco$q52_4_2=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_2)
+
+#Pour coco3
+coco$q52_irl_3<-NULL
+coco$q52_irl_3[coco$q52_1_3=="Non" & coco$q52_3_3=="Non"]<-"Non"
+coco$q52_irl_3[coco$q52_1_3=="Oui" | coco$q52_3_3=="Oui"]<-"Oui"
+
+freq(coco$q52_irl_3)
+
+#Pour coco3
+coco$q52_vir_3<-NULL
+coco$q52_vir_3[coco$q52_2_3=="Non" & coco$q52_4_3=="Non"]<-"Non"
+coco$q52_vir_3[coco$q52_2_3=="Oui" | coco$q52_4_3=="Oui"]<-"Oui"
+
+freq(coco$q52_vir_3)
+
+
+```
+
+
+
+
+```{r}
+#test pondérations
+wtd.table(coco$eayy_A5, coco$q52_irl, weights=coco$coco1_POIDS)
+
+wtd.table(coco$eayy_A5, coco$q52_irl, weights=coco$coco2_POIDS)
+
+wtd.table(coco$eayy_A5, coco$q52_irl, weights=coco$coco3_POIDS)
+
+wtd.table(coco$eayy_A5, coco$q52_irl_1, weights=coco$coco1_POIDS)
+
+wtd.table(coco$eayy_A5, coco$q52_vir_1, weights=coco$coco1_POIDS)
+```
+
+
+```{r}
+coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3
+freq(coco$coco1_q23)
+
+coco$coco1_q23_rec[coco$coco1_q23==1]<-"Seul"
+coco$coco1_q23_rec[coco$coco1_q23>=2 & coco$coco1_q23<=8]<-"Pas seul"
+coco$coco1_q23_rec[coco$coco1_q23==9999]<-"NSP/Refus"
+
+freq(coco$coco1_q23_rec)
+
+wtd.table(coco$coco1_q23_rec, coco$q52_irl_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$coco1_q23_rec, coco$q52_vir_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$eayy_A1, coco$q52_irl_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$eayy_A1, coco$q52_vir_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$eayy_A5C, coco$q52_irl_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$eayy_A5C, coco$q52_vir_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+```
+
+
+Les gens qui passent le confinement seul déclarent plus souvent avoir vu des proches lors de sorties communes. 
+C'est le contraire pour les rencontres virtuelles : ce sont effectivement les personnes passant le confinement à plusieurs
+qui le déclarent un peu plus. 
+
+Les hommes déclarent davantage voir des proches lors de sorties communes, alors que les femmes déclarent plus souvent des
+rencontres virtuelles. Pas étonnant pour les femmes -> Les femmes sont détentrices d'un certain capital vis-à-vis de 
+l'informatique -> Elles sont par ailleurs le relais de l'apprentissage informatique dans les familles ; elles ont de plus 
+une pratique plus récurrente de l'informatique (hors jeux vidéos) -> Elles ont un ordinateur personnel plus jeunes que les garçons -> Rhétorique de la "responsabilité précoce" des filles. 
+
+Les couples les plus récents déclarent moins souvent que les plus anciens (en couple depuis plus d'un an) voir d'autres 
+des individus hors foyer (rencontres réelles ou virtuelles), alors même qu'un certain effet de l'âge (plus jeunes donc 
+moins souvent en couples anciens) pourrait se faire ressentir. 
+
+On choisit de créer une nouvelle variable couple pour coco1. La variable eayy_A5 provient en effet de l'enquête annuelle, 
+or un certain nombre d'individus ont dit être en couple cohabitant mais ont dans coco1 déclarer être seul lors du confinement, 
+ou ne pas être avec un conjoint cohabitant. 
+
+
+```{r}
+
+coco$coco1_couple<-NULL
+coco$coco1_couple[coco$coco1_q23>1 & coco$coco1_q24_1==1]<-"Vit avec conjoint"
+coco$coco1_couple[coco$coco1_q23==1]<-"Vit seul"
+coco$coco1_couple[coco$coco1_q23>1 & coco$coco1_q24_1==2]<-"Ne vit pas avec conjoint"
+
+freq(coco$coco1_couple)
+
+wtd.table(coco$coco1_couple, coco$q52_irl_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$coco1_couple, coco$q52_vir_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+wtd.table(coco$eayy_A1, coco$coco1_couple, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+
+```
+
+
+Parmi les personnes vivant à plusieurs le confinement, il semble que le type de ménage 
+ait un impact -> C'est possible qu'on capte l'effet des foyers monoparentaux (répartition par sexe de la variable étudiée), ou encore un effet de l'âge. Possibilité de réaliser une régression globale, type binomiale ou ordinale. 
+
+
+```{r}
+
+coco$age_rec<-NULL
+coco$age_rec[coco$eayy_A2A_rec<=5]<-"18-29"
+coco$age_rec[coco$eayy_A2A_rec %in% c(6,7)]<-"30-39"
+coco$age_rec[coco$eayy_A2A_rec %in% c(8,9)]<-"40-49"
+coco$age_rec[coco$eayy_A2A_rec %in% c(10,11)]<-"50-59"
+coco$age_rec[coco$eayy_A2A_rec>=12]<-"60 ou plus"
+
+
+wtd.table(coco$age_rec, coco$q52_irl_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+
+wtd.table(coco$age_rec, coco$q52_vir_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+
+```
+
+```{r}
+
+coco$q54_1<-NULL
+coco$q54_1[coco$coco1_q54_8==1]<-"Non"
+coco$q54_1[coco$coco1_q54_8==2]<-"Oui"
+
+freq(coco$q54_1)
+
+
+coco$q54_bis_1<-NULL
+coco$q54_bis_1[coco$coco1_q54_bis_7==1]<-"Non"
+coco$q54_bis_1[coco$coco1_q54_bis_7==2]<-"Oui"
+
+freq(coco$q54_bis_1)
+
+wtd.table(coco$age_rec, coco$q54_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+
+wtd.table(coco$age_rec, coco$q54_bis_1, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+
+round(wtd.table(coco$eayy_F1_rec, weights = coco$coco1_POIDS,
+                useNA = "ifany") %>% 
+        prop.table()*100,1)
+
+round(wtd.table(coco$eayy_F6_rec, weights = coco$coco1_POIDS,
+                useNA = "ifany") %>% 
+        prop.table()*100,1)
+
+round(wtd.table(coco$q52_irl_1, weights = coco$coco1_POIDS,
+                useNA = "ifany") %>% 
+        prop.table()*100,1)
+
+round(wtd.table(coco$q52_vir_1, weights = coco$coco1_POIDS,
+                useNA = "ifany") %>% 
+        prop.table()*100,1)
+
+```
+
+#Sequences
+
+```{r eval=F}
+
+freq(coco$q52_irl_1)
+freq(coco$q52_irl_2)
+freq(coco$q52_irl_3)
+
+# On va vers l'analyse de séquences 
+# Il faut nommer les différents états, leur donner des intitulés 
+labpro.court <- c("N'a pas communiqué", "A communiqué", "Valeur manquante") #il attribue dans l'ordre des modalités, on peut changer l'ordre
+# Ensuite il faut constituer ces différents états dans une séquence 
+trajpro.seq <- seqdef(coco, c("q52_irl_1", "q52_irl_2", "q52_irl_3"),   nr=T, left=NA, gaps=NA, right=NA, states=labpro.court, labels=labpro.court) #left gaps right, spécifie ce qu'on fait des missing values, à gauche, au milieu et à droite, ici précise qu'on les considère bien comme des NA. 
+summary(trajpro.seq) # Permet d'avoir des infos sur les séquences 
+
+
+
+# 1/ Avec les 10 premieres sequences 
+seqiplot(trajpro.seq, with.legend = F, main = "ce qu on veut") 
+seqiplot(trajpro.seq, with.legend = F, main = "ce qu on veut", cpal=brewer.pal(8, "Greys")) 
+
+# 2/ Les 10 séquences les plus fréquentes 
+seqfplot(trajpro.seq, pbarw = T, with.legend = T, main = "Sequence frequency plot efficace")
+
+# 3/ Avec un chronogramme 
+par(mfrow=c(1,1), cex=0.3) #pour paramètrer l'encart sur le côté du graphique
+seqdplot(trajpro.seq, with.legend=T, xtlab=1:9, cex.legend=0.5, use.layout=T, legend.prop=0.1, with.missing=T)
+# Graphique représentant la distribution des états selon les périodes : chronogramme 
+# Donne une première utile de la fréquence des états et de comment cela évolue 
+
+
+# 4/ Avec un "tapis"  
+#par(mar=rep(2,4), cex=0.2)
+seqIplot(trajpro.seq, with.legend=T, xtlab=1:9, cex.legend=0.5, use.layout=T, legend.prop=0.1, with.missing=T, cex.axis=1) 
+
+
+
+
+
+
+
+
+
+
+## Pour l'optimal matching, on calcule une mesure de distances : différentes possibilités 
+pro.seq.om <- seqdist(trajpro.seq, method="OM", indel=1, sm="TRATE", with.missing=T) #indel coût d'insertion, sm probabilité de transition inférées par rapport à ce qu'on observe dans l'échantillon
+# dist.mostfreq <- seqdist(trajpro.seq, method="LCS", refseq = 0, with.missing=T) # Distance calculée selon le tronc commun le plus long, LCS Longest Common Sequence, refseq = séquence de référence
+#peut par exemple être utilisée pour tracer les tapis pas selon l'identifiant de l'individu, mais le nombre de créneaux commun, l'utilise pour l'ordonner. 
+#peut donner des résultats différents 
+
+
+# Ensuite on fait la CAH 
+clusterpro <- agnes(pro.seq.om, diss = T, method="ward")
+plot(clusterpro, ask=F, which.plots = 2, main= "", xlab="")  
+plot(sort(clusterpro$height, decreasing=TRUE)[1:20], type="s", xlab="Nombre de classes", ylab="Inertie", cex.axis=0.8, font.lab=3) #pour visualiser les sauts d'inertie
+
+# On décide donc de couper à 4 classes 
+coco$classes <- cutree(clusterpro, k=4)
+table(coco$classes, useNA="ifany")
+par(mfrow=c(1,1), cex=0.3)
+
+
+
+
+
+
+
+
+
+
+# La classe 1 : souvent 
+d1 <- subset(coco, classes %in% c("1"))
+trajpro.seq1 <- seqdef(d1, c("q52_irl_1", "q52_irl_2", "q52_irl_3"),   nr=T, left=NA, gaps=NA, right=NA, states=labpro.court, labels=labpro.court) 
+seqIplot(trajpro.seq1, withlegend=T) 
+
+# La classe 2 : premiere fois 
+d2 <- subset(coco, classes %in% c("2"))
+trajpro.seq2 <- seqdef(d2, c("q52_irl_1", "q52_irl_2", "q52_irl_3"),   nr=T, left=NA, gaps=NA, right=NA, states=labpro.court, labels=labpro.court) 
+seqIplot(trajpro.seq2, withlegend=T) 
+
+# La classe 3 : petite classe avec valeurs manquantes 
+d3 <- subset(coco, classes %in% c("3"))
+trajpro.seq3 <- seqdef(d3, c("q52_irl_1", "q52_irl_2", "q52_irl_3"),   nr=T, left=NA, gaps=NA, right=NA, states=labpro.court, labels=labpro.court) 
+seqIplot(trajpro.seq3, withlegend=T) 
+
+# La classe 4 : "permanents" 
+d4 <- subset(coco, classes %in% c("4"))
+trajpro.seq4 <- seqdef(d4, c("q52_irl_1", "q52_irl_2", "q52_irl_3"),   nr=T, left=NA, gaps=NA, right=NA, states=labpro.court, labels=labpro.court) 
+seqIplot(trajpro.seq4, withlegend=T) 
+
+
+
+
+coco$tps_pas_venu <- seqistatd(trajpro.seq)[,1] #indexation ,1, première colonne de l'objet seqistatd(trajpro.seq)
+coco$tps_venu <- seqistatd(trajpro.seq)[,2]
+coco$tps_missing <- seqistatd(trajpro.seq)[,3]
+
+
+table(coco$tps_pas_venu,useNA="ifany")
+barplot(table(coco$tps_pas_venu , useNA="ifany"))
+boxplot(coco$tps_pas_venu ~ coco$classes)
+
+
+seqdplot(trajpro.seq, with.legend=T, group=coco$classes,
+         xtlab=1:9, cex.legend=0.9, use.layout=T, legend.prop=0.2, with.missing=T)
+
+seqIplot(trajpro.seq, with.legend=T, group=coco$classes, 
+         xtlab=1:9, cex.legend=1.3, use.layout=T, legend.prop=0.2, with.missing=T)
+
+```
+
+```{r eval=F}
+rprop(table(coco$coco2_q38_modifie, coco$classes))
+
+cprop(table(coco$coco2_q38_modifie, coco$classes))
+
+wtd.table(coco$coco2_q38_modifie, coco$classes, 
+          weights = coco$coco2_POIDS, useNA = "ifany") %>% 
+  rprop(digits=1)
+```
+
+
+# Régression
+
+```{r}
+
+coco$reg_irl<-NULL
+coco$reg_irl[coco$q52_irl=="Oui"]<-1
+coco$reg_irl[coco$q52_irl=="Non"]<-0
+
+coco$reg_irl<-factor(coco$reg_irl)
+
+class(coco$reg_irl)
+
+coco$eayy_A1<-factor(coco$eayy_A1)
+
+coco$eayy_A5<-factor(coco$eayy_A5)
+
+coco$eayy_A5C<-factor(coco$eayy_A5C)
+
+coco$eayy_C8<-factor(coco$eayy_C8)
+
+
+coco$eayy_PCS6_rec<-coco$eayy_PCS6
+
+coco$eayy_PCS6_rec[coco$eayy_PCS6_rec %in% c("666","999")]<-"Non concerné/NSP/Refus"
+
+coco$eayy_PCS6_rec<-factor(coco$eayy_PCS6_rec, c("3","1","2","4","5","6","Non concerné/NSP/Refus"))
+
+coco$insee_NUTS1<-factor(coco$insee_NUTS1)
+
+coco$coco2_q38_modifie<-factor(coco$coco2_q38_modifie)
+
+coco$eayy_B18_rec<-factor(coco$eayy_B18_rec)
+
+coco$age_rec<-factor(coco$age_rec, c("30-39","18-29","40-49","50-59","60 ou plus"))
+
+coco$coco1_couple<-factor(coco$coco1_couple, c("Vit avec conjoint","Ne vit pas avec conjoint","Vit seul"))
+
+coco$coco1_q23_rec<-factor(coco$coco1_q23_rec, c("Seul","Pas seul","NSP/Refus"))
+
+coco$coco2_q38_modifie_rec<-NULL
+coco$coco2_q38_modifie_rec[coco$coco2_q38_modifie=="1" | coco$coco2_q38_modifie=="2"]<-"Au moins en partie sur place"
+coco$coco2_q38_modifie_rec[coco$coco2_q38_modifie=="3"]<-"En distanciel"
+coco$coco2_q38_modifie_rec[coco$coco2_q38_modifie=="4"]<-"Chômage partiel ou autre situation"
+coco$coco2_q38_modifie_rec[coco$coco2_q38_modifie=="9999"]<-"NSP/Refus"
+
+
+
+#nb d'ordi par personne
+coco$coco1_q28 <- as.numeric(coco$coco1_q28)
+freq(coco$coco1_q28)
+
+coco$coco1_q28_rap <- round(coco$coco1_q28/coco$coco1_q23, digits=2)
+freq(coco$coco1_q28_rap)
+coco$coco1_q28_rap_2<-NULL
+coco$coco1_q28_rap_2[coco$coco1_q28_rap>=1]<-2
+coco$coco1_q28_rap_2[coco$coco1_q28_rap<1]<-1
+coco$coco1_q28_rap_2[coco$coco1_q28_rap<0.33]<-0.5
+coco$coco1_q28_rap_2[coco$coco1_q28_rap==0]<-0
+freq(coco$coco1_q28_rap_2)
+#en dessous de 1 ordi pour trois --> 0
+#moins de 1 --> 1
+#1 (inclu) --> 2
+
+#nb de smartphone par personne
+coco$coco1_q29_rap <- round(coco$coco1_q29/coco$coco1_q23, digits=2)
+freq(coco$coco1_q29_rap)
+coco$coco1_q29_rap_2<-NULL
+coco$coco1_q29_rap_2[coco$coco1_q29_rap>=1]<-2
+coco$coco1_q29_rap_2[coco$coco1_q29_rap<1]<-1
+coco$coco1_q29_rap_2[coco$coco1_q29_rap<0.33]<-0.5
+coco$coco1_q29_rap_2[coco$coco1_q29_rap==0]<-0
+coco$coco1_q29_rap_2[coco$coco1_q29_rap>5]<-NA
+freq(coco$coco1_q29_rap_2)
+
+#internet --> on ne peut pas parce que c'est une question filtre
+
+coco$coco1_score_num<-NULL
+coco$coco1_score_num<-coco$coco1_q28_rap_2+coco$coco1_q29_rap_2
+coco$coco1_score_num[is.na(coco$coco1_q28) | is.na(coco$coco1_q29)]<-NA
+freq(coco$coco1_score_num)
+
+coco$coco1_score_num_rec<-NULL
+coco$coco1_score_num_rec[coco$coco1_score_num==4]<-"1 téléphone et 1 ordinateur"
+coco$coco1_score_num_rec[coco$coco1_score_num!=4]<-"Pas 1 téléphone et 1 ordinateur"
+coco$coco1_score_num_rec[is.na(coco$coco1_score_num)]<-"Pas 1 téléphone et 1 ordinateur"
+freq(coco$coco1_score_num_rec)
+
+model_1<-glm(reg_irl ~ eayy_A1 + age_rec + coco1_couple + eayy_PCS6_rec + coco2_q38_modifie_rec + insee_NUTS1, data=coco, family="binomial", weights=coco$coco2_POIDS)
+
+summary(model_1)
+
+ggcoef_model(model_1, exponentiate = TRUE)
+
+tbl_regression(model_1, exponentiate = TRUE)
+
+nagelkerke(model_1)
+
+```
+
