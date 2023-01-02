@@ -55,6 +55,33 @@ Cette remarque illustre la difficulté à déterminer un état clair des modalit
 
 # Partie 2 : Des compositions de ménages importantes
 ```{r}
+
+```
+
+## Impact du nombre de personnes dans le foyer
+Les couples les plus récents déclarent moins souvent que les plus anciens (en couple depuis plus d'un an) voir d'autres individus hors foyer (rencontres réelles ou virtuelles). Ceci rejoint la littérature à ce sujet, mais pourrait en réalité cacher un effet d’âge ou de composition du ménage. Les nouveaux couples (moins d’un an) ont ainsi moins de probabilité d’avoir un enfant ensemble, ce qui est à mettre en lien avec l’âge des individus en question. 
+
+On choisit de créer une nouvelle variable couple pour coco1 en utilisant les questions relatives au nombre de personnes dans le ménage et la présence d’un ou d’une conjointe dans ce même ménage. Nous avons effectivement choisi de ne pas nous reposer sur la variable de l’enquête annuelle prévue à cet effet ; cette dernière ayant été réalisée en 2019 et les vagues coco ayant été faites en 2020, nous partons du principe qu’un certain nombre de couples ont pu se former, se briser ou encore se mettre en ménage. La variable eayy_A5 (Vit en couple) provient en effet de l'enquête annuelle. Or un certain nombre d'individus ont dit être en couple cohabitant dans l’enquête annuelle, mais ont déclaré être seuls lors du confinement ou ne pas être avec un conjoint cohabitant dans coco1. Pour éviter cet écueil, nous choisissons de nous focaliser sur une variable construite pour le confinement spécifiquement, même si nous perdons l’information du couple cohabitant ou non. 
+
+Les personnes vivant seules (mais pas nécessairement célibataires) déclarent à 55,9 % avoir rencontré au moins une fois un ou des proches entre le début du premier confinement et mi-avril. Les personnes vivant avec leur conjoint·e sont eux et elles 49 %, les personnes ne vivant pas avec un ou une conjoint·e ni seules (familles monoparentales par exemple) sont par contre 40,5 %. Nous pourrions donc faire l’hypothèse d’un possible effet du couple, d’âge ou encore d’enfants (familles monoparentales). Après l’examen de plusieurs variables, il apparaît difficile de déterminer si c’est davantage le couple ou le fait de ne pas vivre seul·e qui peut influer. Contrairement à ce que nous pensions, les enfants, qu’ils soient cohabitants ou non, ne semblent pas avoir d’impact sur le lien social. Les résultats obtenus n’ont pas été probants, en revanche, ce n’est pas le cas de la composition du foyer et notamment du fait d’être en couple ou non. 
+
+Si l’on s’intéresse au nombre d’habitant·e·s dans le ménage, les individus passant le confinement seuls déclarent plus souvent avoir vu des proches lors de sorties communes. C'est néanmoins le contraire pour les rencontres virtuelles : ce sont effectivement les personnes passant le confinement à plusieurs qui le déclarent un peu plus. Ces différences restent néanmoins minimes, en particulier pour les rencontres virtuelles. 
+
+Avec les données à notre disposition, nous avons décidé de représenter graphiquement sur le territoire de la France métropolitaine (hors Corse) la part des ménages composés d’une seule personne. La composition des ménages étant liée à la nature de l’espace occupé (territoire rural, métropole…), alors la proportion différenciée de métropoles sur notre territoire donnera des résultats contrastés. 
+```{r carte}
+region_sf <- st_read(dsn = "/regions-20180101-shp/regions-20180101-shp/regions-20180101.shp")
+region_sf <- st_transform(region_sf, crs = 2154)
+region_sf<-subset(region_sf, code_insee!=94 & !code_insee %in% c("01","02","03","04","06"))
+#recodage variables spatiales / region_sf$code_insee
+region_sf$code_insee_rec<-NULL
+region_sf$code_insee_rec [region_sf$code_insee==11] <- 1
+region_sf$code_insee_rec [region_sf$code_insee %in% c(24,28)] <- 2
+region_sf$code_insee_rec [region_sf$code_insee==32] <- 3
+region_sf$code_insee_rec [region_sf$code_insee %in% c(44,27)] <- 4
+region_sf$code_insee_rec [region_sf$code_insee %in% c(52,53)] <- 5
+region_sf$code_insee_rec [region_sf$code_insee==75] <- 6
+region_sf$code_insee_rec [region_sf$code_insee==84] <- 7
+region_sf$code_insee_rec [region_sf$code_insee %in% c(93,76)] <- 8
 # Pourcentage de gens seuls ----
 a<-data.frame(wtd.table(coco$insee_NUTS1, coco$eayy_C1_rec, 
                         weights = coco$coco2_POIDS, useNA = "ifany") %>% 
@@ -75,32 +102,6 @@ ggplot()+
        fill="Pourcentage de personnes vivant seules",
        caption="© les contributeurs d'OpenStreetMap sous licence ODbL")
 ```
-
-## Impact du nombre de personnes dans le foyer
-Les couples les plus récents déclarent moins souvent que les plus anciens (en couple depuis plus d'un an) voir d'autres individus hors foyer (rencontres réelles ou virtuelles). Ceci rejoint la littérature à ce sujet, mais pourrait en réalité cacher un effet d’âge ou de composition du ménage. Les nouveaux couples (moins d’un an) ont ainsi moins de probabilité d’avoir un enfant ensemble, ce qui est à mettre en lien avec l’âge des individus en question. 
-
-On choisit de créer une nouvelle variable couple pour coco1 en utilisant les questions relatives au nombre de personnes dans le ménage et la présence d’un ou d’une conjointe dans ce même ménage. Nous avons effectivement choisi de ne pas nous reposer sur la variable de l’enquête annuelle prévue à cet effet ; cette dernière ayant été réalisée en 2019 et les vagues coco ayant été faites en 2020, nous partons du principe qu’un certain nombre de couples ont pu se former, se briser ou encore se mettre en ménage. La variable eayy_A5 (Vit en couple) provient en effet de l'enquête annuelle. Or un certain nombre d'individus ont dit être en couple cohabitant dans l’enquête annuelle, mais ont déclaré être seuls lors du confinement ou ne pas être avec un conjoint cohabitant dans coco1. Pour éviter cet écueil, nous choisissons de nous focaliser sur une variable construite pour le confinement spécifiquement, même si nous perdons l’information du couple cohabitant ou non. 
-
-Les personnes vivant seules (mais pas nécessairement célibataires) déclarent à 55,9 % avoir rencontré au moins une fois un ou des proches entre le début du premier confinement et mi-avril. Les personnes vivant avec leur conjoint·e sont eux et elles 49 %, les personnes ne vivant pas avec un ou une conjoint·e ni seules (familles monoparentales par exemple) sont par contre 40,5 %. Nous pourrions donc faire l’hypothèse d’un possible effet du couple, d’âge ou encore d’enfants (familles monoparentales). Après l’examen de plusieurs variables, il apparaît difficile de déterminer si c’est davantage le couple ou le fait de ne pas vivre seul·e qui peut influer. Contrairement à ce que nous pensions, les enfants, qu’ils soient cohabitants ou non, ne semblent pas avoir d’impact sur le lien social. Les résultats obtenus n’ont pas été probants, en revanche, ce n’est pas le cas de la composition du foyer et notamment du fait d’être en couple ou non. 
-
-Si l’on s’intéresse au nombre d’habitant·e·s dans le ménage, les individus passant le confinement seuls déclarent plus souvent avoir vu des proches lors de sorties communes. C'est néanmoins le contraire pour les rencontres virtuelles : ce sont effectivement les personnes passant le confinement à plusieurs qui le déclarent un peu plus. Ces différences restent néanmoins minimes, en particulier pour les rencontres virtuelles. 
-
-Avec les données à notre disposition, nous avons décidé de représenter graphiquement sur le territoire de la France métropolitaine (hors Corse) la part des ménages composés d’une seule personne. La composition des ménages étant liée à la nature de l’espace occupé (territoire rural, métropole…), alors la proportion différenciée de métropoles sur notre territoire donnera des résultats contrastés. 
-```{r carte}
-region_sf <- st_read(dsn = "C:/Users/tripl/Documents/TD_R_M2/regions-20180101-shp/regions-20180101-shp/regions-20180101.shp")
-region_sf <- st_transform(region_sf, crs = 2154)
-region_sf<-subset(region_sf, code_insee!=94 & !code_insee %in% c("01","02","03","04","06"))
-#recodage variables spatiales / region_sf$code_insee
-region_sf$code_insee_rec<-NULL
-region_sf$code_insee_rec [region_sf$code_insee==11] <- 1
-region_sf$code_insee_rec [region_sf$code_insee %in% c(24,28)] <- 2
-region_sf$code_insee_rec [region_sf$code_insee==32] <- 3
-region_sf$code_insee_rec [region_sf$code_insee %in% c(44,27)] <- 4
-region_sf$code_insee_rec [region_sf$code_insee %in% c(52,53)] <- 5
-region_sf$code_insee_rec [region_sf$code_insee==75] <- 6
-region_sf$code_insee_rec [region_sf$code_insee==84] <- 7
-region_sf$code_insee_rec [region_sf$code_insee %in% c(93,76)] <- 8
-```
 Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
 Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. 
 Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré. 
@@ -108,5 +109,14 @@ Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Ma
 ---
 
 # Partie 3 : Régression
+```{r}
+
+```
 
 # Conclusion : 
+
+\newpage
+# Bibliographie : 
+- 
+-
+-

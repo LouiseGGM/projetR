@@ -75,7 +75,7 @@ wtd.table(age_rec, coco$coco1_q61_7,
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
 ```
-% en colonnes : à ionterpréter sur 100 répondant pour chaque habitude
+% en colonnes : à interpréter sur 100 répondant pour chaque habitude
 Concernant le fait de téléphoner par rapport à d'habitude 
 Les moins de 29 ans se servent autant voire plus de leur téléphone pour téléphoner, 
 Est ce qu'on peut dire qu'ils sont sureprésentés par rapport à l'ensemble ?
