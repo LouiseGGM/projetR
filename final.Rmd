@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas
 library(questionr)
 library(dplyr)
 library(gtsummary)
-library(recompanion)
+# library(recompanion)
 library(GGally)
 library(tidyverse)
 library(survey)
@@ -29,6 +29,17 @@ H2 : La technologie a permis le maintien d’un certain lien social, mais son vi
 Nous avons sélectionné les enquêtés ayant répondu aux trois vagues choisies. Des problèmes de pondérations se sont néanmoins posés ; la pondération étant propre à chaque vague et notre échantillon ne contenant que les enquêtés ayant répondu à coco1, 2 et 3, il est évident que les poids ne sont pas adaptés à notre choix. Arbitrairement, nous avons tranché en faveur de la pondération de la deuxième vague, ainsi celle-ci sera appliquée sur la totalité des tests effectués sur notre population fille ainsi que pour la régression. Nous attirons l’attention sur le fait que ces pondérations ne permettent pas d’avoir la même fiabilité de résultat que des tris croisés sur l’entièreté de la population d’une des vagues. Nous avons néanmoins été dans l’impossibilité de construire notre propre pondération, dû notamment à un manque de données sur la population mère. 
 
 Nous commencerons par aborder les possibles impacts des situations professionnelles ainsi que la place de la technologie vis-à-vis du lien social, avant de nous focaliser sur des variables relationnelles comme le couple et la composition du ménage, puis de finir par visualiser les liens entre ces facteurs et la survenue de rencontres réelles dans une régression binomiale. 
+```{r données}
+coco1 <- read.csv("data/coco1_2020/donnees_coco1/csv_coco1/fr.cdsp.ddi.elipss.202004coco1.csv", stringsAsFactors = F)
+coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.202004.csv", stringsAsFactors = F)
+coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
+coco2a <- coco2[,!grepl("eavy", names(coco2))]
+coco3a <- coco3[,!grepl("eavy", names(coco3))]
+rm(coco2, coco3)
+cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
+coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
+rm(coco1, cocoa, coco2a, coco3a, coco2, coco3)
+```
 
 # Partie 1 : Deux facteurs aux explications limitées : les situations professionnelles et la place de la technologie
 Nous avons décidé de construire deux indicateurs principaux du lien social : l’un porte sur les rencontres en face-à-face avec des amis ou de la famille, l’autre sur les rencontres virtuelles avec ces mêmes groupes. De par le principe d’un confinement, nous nous attendions à une bien moindre occurrence des rencontres “réelles” par rapport aux virtuelles ; ceci se confirme puisque d’après nos données, 48,5 % des enquêté·e·s ont déclaré avoir vu au moins une fois un proche sur ces 3 vagues d’enquête, contre 94,3 % pour les rencontres virtuelles. Nous avons ainsi formulé l’hypothèse que les outils technologiques ont permis le maintien d’un certain lien social, et qu’une partie des rencontres in situ pouvaient être attribuées à un emploi sur le lieu de travail habituel.
@@ -43,6 +54,28 @@ Cette remarque illustre la difficulté à déterminer un état clair des modalit
 ## La place de la technologie
 
 # Partie 2 : Des compositions de ménages importantes
+```{r}
+# Pourcentage de gens seuls ----
+a<-data.frame(wtd.table(coco$insee_NUTS1, coco$eayy_C1_rec, 
+                        weights = coco$coco2_POIDS, useNA = "ifany") %>% 
+                rprop(digits=1))
+b <- a[(1:8),]
+c <- select(b, -Var2)
+# Jointure :
+c$Var1<-as.character(c$Var1)
+region_sf$code_insee_rec<-as.character(region_sf$code_insee_rec)
+regioncoco_sf <- left_join(region_sf,
+                           c, by = c("code_insee_rec"="Var1"))
+# Vivre seul ou pas : coco1_q23_rec
+ggplot()+
+  geom_sf(data=regioncoco_sf, aes(fill=Freq)) +
+  viridis::scale_fill_viridis(direction=-1)+
+  theme_bw()+
+  labs(title = "Pourcentage de personnes vivant seules au sein de la France métropolitaine (hors Corse)",
+       fill="Pourcentage de personnes vivant seules",
+       caption="© les contributeurs d'OpenStreetMap sous licence ODbL")
+```
+
 ## Impact du nombre de personnes dans le foyer
 Les couples les plus récents déclarent moins souvent que les plus anciens (en couple depuis plus d'un an) voir d'autres individus hors foyer (rencontres réelles ou virtuelles). Ceci rejoint la littérature à ce sujet, mais pourrait en réalité cacher un effet d’âge ou de composition du ménage. Les nouveaux couples (moins d’un an) ont ainsi moins de probabilité d’avoir un enfant ensemble, ce qui est à mettre en lien avec l’âge des individus en question. 
 
@@ -54,7 +87,19 @@ Si l’on s’intéresse au nombre d’habitant·e·s dans le ménage, les indiv
 
 Avec les données à notre disposition, nous avons décidé de représenter graphiquement sur le territoire de la France métropolitaine (hors Corse) la part des ménages composés d’une seule personne. La composition des ménages étant liée à la nature de l’espace occupé (territoire rural, métropole…), alors la proportion différenciée de métropoles sur notre territoire donnera des résultats contrastés. 
 ```{r carte}
-
+region_sf <- st_read(dsn = "C:/Users/tripl/Documents/TD_R_M2/regions-20180101-shp/regions-20180101-shp/regions-20180101.shp")
+region_sf <- st_transform(region_sf, crs = 2154)
+region_sf<-subset(region_sf, code_insee!=94 & !code_insee %in% c("01","02","03","04","06"))
+#recodage variables spatiales / region_sf$code_insee
+region_sf$code_insee_rec<-NULL
+region_sf$code_insee_rec [region_sf$code_insee==11] <- 1
+region_sf$code_insee_rec [region_sf$code_insee %in% c(24,28)] <- 2
+region_sf$code_insee_rec [region_sf$code_insee==32] <- 3
+region_sf$code_insee_rec [region_sf$code_insee %in% c(44,27)] <- 4
+region_sf$code_insee_rec [region_sf$code_insee %in% c(52,53)] <- 5
+region_sf$code_insee_rec [region_sf$code_insee==75] <- 6
+region_sf$code_insee_rec [region_sf$code_insee==84] <- 7
+region_sf$code_insee_rec [region_sf$code_insee %in% c(93,76)] <- 8
 ```
 Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
 Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. 
