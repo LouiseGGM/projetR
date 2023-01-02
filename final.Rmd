@@ -1,0 +1,50 @@
+---
+title: "Untitled"
+author: "LouiseLisaElie"
+date: "2023-01-02"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas 
+library(questionr)
+library(dplyr)
+library(gtsummary)
+library(recompanion)
+library(GGally)
+library(tidyverse)
+library(survey)
+library(sf)
+```
+# Introduction
+L'enquête CoCo a été mise en place suite à la décision du gouvernement français de limiter les déplacements des Français pour lutter contre la pandémie de Covid-19 le 16 mars 2020. Afin d'observer ce phénomène social, plusieurs équipes de recherches ont lancé des enquêtes par questionnaires en ligne. Dans le cadre de ce travail, nous utiliserons les données de l'enquête CoCo issue du projet « Faire face à la Covid-19 : Distanciation sociale, cohésion et inégalité dans la France de 2020 » menée par le Centre de Données socio-politiques (CDSP) soutenue par l'Agence Nationale de la Recherche. L'enquête CoCo permet de compléter et de préciser l'enquête produite annuellement sur le panel ELIPSS, dans un cadre de confinement. Le panel ELIPSS est un échantillon représentatif de la population française constitué de 1400 personnes. Cet échantillon est interrogé une fois par an depuis 2012 et présente un taux de réponse moyen de 80 %.
+
+Nous avons sélectionné les trois premières vagues, nous avons souhaité tester nos hypothèses sur le premier confinement, afin d’étudier ces questions avant que la population ne s’y “habitue”. Une étude comparative du lien social entre les divers confinements aurait également pu être envisagée. Les vagues de l’enquête coco ont été renouvelées tous les 15 jours. Les questions, bien que variables en nombre selon les vagues, balayent un large spectre de thèmes : travail, sentiments, école à la maison, l'état de santé, ... bien que tournées afin de mesurer les inégalités sociales. Ainsi, notre exploration s’appuiera sur des questions issues de l’enquête coco et de l’enquête annuelle (eayy2019). Il est cependant important de préciser à ce stade la complexité de l’enquête, puisque, par exemple, la variable “couple” comme celle du nombre d’enfants, font partie de l’enquête annuelle qui a été effectuée un an plus tôt. Il est possible qu’au moment des enquêtes CoCo, ces éléments ne soient plus d’actualité. 
+
+Le lien social est une notion phare de la sociologie (Comte, Durkheim, plus récemment Paugam, etc.). Dû à la nécessité d’être concis, nous la simplifions grandement en abordant uniquement dans le cadre de ce dossier le lien social comme intensité de rencontres entre des individus proches (amis et famille principalement). D’autres facteurs entrent selon nous en ligne de compte, tel que l’appui, qu’il soit psychologique, financier ou physique, donné ou concédé par autrui, ou encore l’insertion sociale dans des groupes/associations qui permettent des échanges, si ce n’est avec des proches, avec d’autres humains s’investissant dans ces mêmes projets. On l’aura compris, le lien social recouvre une réalité vaste et interroge plusieurs principes, celui de la solidarité notamment, idée qui se retrouve fortement dans le discours de la “crise du lien social” (Paugam, 2022). Nous tâcherons donc d’apporter des éléments de réponse à plusieurs questionnements : Quels sont les facteurs influant sur le fait de rencontrer en face-à-face ses proches ? Y a-t-il eu compensation de ce potentiel “manque” de rencontres réelles par des discussions téléphoniques/par réseaux sociaux plus importantes ? Nous posons l’hypothèse ici que le confinement a restreint les possibilités de lien “in situ”, mais la technologie, la modalité d’exercice de l’emploi et la composition du foyer ont influé sur le maintien d’un certain lien social. 
+
+Nous formulons de manière plus détaillée les trois hypothèses suivantes : 
+H1 : Le maintien d’un emploi (sur place notamment) permet également le maintien d’un lien social, à mettre en lien avec les PCS et des secteurs/entreprises différemment organisés. 
+H2 : La technologie a permis le maintien d’un certain lien social, mais son visage reste différentiel selon l’âge. H3 : Les couples, en particulier ceux nouvellement formés ou nouvellement concubins, déclarent moins souvent des communications. 
+
+Nous avons sélectionné les enquêtés ayant répondu aux trois vagues choisies. Des problèmes de pondérations se sont néanmoins posés ; la pondération étant propre à chaque vague et notre échantillon ne contenant que les enquêtés ayant répondu à coco1, 2 et 3, il est évident que les poids ne sont pas adaptés à notre choix. Arbitrairement, nous avons tranché en faveur de la pondération de la deuxième vague, ainsi celle-ci sera appliquée sur la totalité des tests effectués sur notre population fille ainsi que pour la régression. Nous attirons l’attention sur le fait que ces pondérations ne permettent pas d’avoir la même fiabilité de résultat que des tris croisés sur l’entièreté de la population d’une des vagues. Nous avons néanmoins été dans l’impossibilité de construire notre propre pondération, dû notamment à un manque de données sur la population mère. 
+
+Nous commencerons par aborder les possibles impacts des situations professionnelles ainsi que la place de la technologie vis-à-vis du lien social, avant de nous focaliser sur des variables relationnelles comme le couple et la composition du ménage, puis de finir par visualiser les liens entre ces facteurs et la survenue de rencontres réelles dans une régression binomiale. 
+
+# Partie 1 : Deux facteurs aux explications limitées : les situations professionnelles et la place de la technologie
+## Des situations professionnelles contrastées
+## La place de la technologie
+
+# Partie 2 : Des compositions de ménages importantes
+## Impact du nombre de personnes dans le foyer
+```{r carte}
+
+```
+Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
+Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. 
+Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré. 
+Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. 
+---
+
+# Partie 3 : Régression
+
+# Conclusion : 
