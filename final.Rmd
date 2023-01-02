@@ -54,9 +54,6 @@ Cette remarque illustre la difficulté à déterminer un état clair des modalit
 ## La place de la technologie
 
 # Partie 2 : Des compositions de ménages importantes
-```{r}
-
-```
 
 ## Impact du nombre de personnes dans le foyer
 Les couples les plus récents déclarent moins souvent que les plus anciens (en couple depuis plus d'un an) voir d'autres individus hors foyer (rencontres réelles ou virtuelles). Ceci rejoint la littérature à ce sujet, mais pourrait en réalité cacher un effet d’âge ou de composition du ménage. Les nouveaux couples (moins d’un an) ont ainsi moins de probabilité d’avoir un enfant ensemble, ce qui est à mettre en lien avec l’âge des individus en question. 
@@ -102,10 +99,10 @@ ggplot()+
        fill="Pourcentage de personnes vivant seules",
        caption="© les contributeurs d'OpenStreetMap sous licence ODbL")
 ```
-Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
-Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. 
+<font size="6">Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
+Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. <br/>
 Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré. 
-Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. 
+Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. </font>
 ---
 
 # Partie 3 : Régression
