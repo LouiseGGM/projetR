@@ -70,13 +70,10 @@ freq(coco$coco1_q28)
 #rapport nb ordi sur nb personnes dans le ménage
 coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
 freq(coco$coco1_q28_rap)
-coco$coco1_q28_score <- case_when(coco$coco1_q28_rap<0.5 ~ "Un pour 3 ou moins",
-                                  coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
+coco$coco1_q28_score <- case_when(coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
                                   coco$coco1_q28_rap==1 ~ "Un par pers", 
                                   coco$coco1_q28_rap>1 ~ "Plus d'1/pers")  
-coco$coco1_q28_score <- factor(coco$coco1_q28_score,
-                       levels=c("Moins de 1/3 pers","Moins de 1/2 pers",
-                                "Un par pers","Plus d'1/pers"))
+coco$coco1_q28_score <- factor(coco$coco1_q28_score,levels=c("Moins de 1/2 pers","Un par pers","Plus d'1/pers"))
 freq(coco$coco1_q28_score)
 ```
 ```{r pers log}
@@ -109,13 +106,10 @@ freq(coco$coco1_q29)
 #rapport nb smartphones/tablettes sur nb personnes dans le ménage
 coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
 freq(coco$coco1_q29_rap)
-coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.33 ~ "4 outils pour 3 ou -",
-                                  coco$coco1_q29_rap<1.5 ~ "4 outils pour 2",
+coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.5 ~ "Moins d'1/                                  pers",
                                   coco$coco1_q29_rap==2 ~ "2 outils/pers", 
                                   coco$coco1_q29_rap>2 ~ "+ de 2/pers")  
-coco$coco1_q29_score <- factor(coco$coco1_q29_score,
-                       levels=c("4 outils pour 3 ou -","4 outils pour 2",
-                                "2 outils/pers","+ de 2/pers"))
+coco$coco1_q29_score <- factor(coco$coco1_q29_score,levels=c("Moins d'1/pers","2 outils/pers","+ de 2/pers"))
 freq(coco$coco1_q29_score)
 ```
 
@@ -134,6 +128,10 @@ addmargins(table(coco$coco1_q29_score, coco$coco1_q23))
 ```
 
 ```{r tab pond}
+wtd.table(coco$coco1_q23, coco$coco1_q29_score, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
 wtd.table(age_rec, coco$coco1_q29_score, 
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
@@ -148,9 +146,9 @@ wtd.table(coco$coco1_q29_score, age_rec,
 ```
 
 
-#temps accordé
+#Temps accordé
 ```{r rec tel}
-# coco1_q61_7 --> temps consacré par rappport à d'habitude à parler au telephone
+# coco1_q61_7 --> temps consacré par rapport à d'habitude à parler au telephone
 freq(coco$coco1_q61_7)
 coco$coco1_q61_7[coco$coco1_q61_7 %in% c("1","2")]<-"Moins que d'habitude"
 coco$coco1_q61_7[coco$coco1_q61_7 %in% c("3")]<-"Autant que d'habitude"
@@ -176,7 +174,7 @@ wtd.table(coco$coco1_q61_7, age_rec,
           weights = coco$coco1_POIDS, useNA = "ifany") %>% 
   cprop(digits=1)
 ```
-Parmi les moins de 29 : 64% téléphone plus que d'habitude
+Parmi les moins de 29 : 64 % téléphone plus que d'habitude
 30-39 : répartition principale autour des mod autant et plus : 42,7% et 48,1%, 
         part de NA/NC la plus importante : 5,7%
 40-49 : 63.7% déclarent plus que d'habitude, 32,7% autant que d'hab

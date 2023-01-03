@@ -57,7 +57,7 @@ Le chômage partiel a également été de mise pour certains secteurs. Ainsi, d'
 
 Cette remarque illustre la difficulté à déterminer un état clair des modalités d'exercice de l'emploi. En effet, une entreprise peut avoir recours au chômage partiel pendant quelques jours/semaines, or, nous n'avons pas accès à ce niveau de détails : l'enquête coco a été renouvelée toutes les 2/3 semaines. De plus, nos 3 vagues ne contiennent pas les mêmes questions vis-à-vis de la modalité d'exercice de l'emploi ; effectivement la q38 est unique à la deuxième et troisième vague, mais les formulations changent entre elles, puisque la vague 2 interroge la situation sous les 2 dernières semaines alors que la vague 3 interroge la situation actuelle à la date de passation (fin Avril-début Mai). Nous n'avons donc pas accès à l'entière temporalité, et au-delà, nous n'avons ainsi pas pu créer de variables regroupant les informations de coco1, 2 et 3.
 ```{r recodages}
-coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3 personne dans le foyer
+coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2.6 en 3 personnes dans le foyer
 freq(coco$eayy_A2A_rec)
 coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("1","2","3","4",'5')]<-"Moins 29 ans"
 coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("6","7")]<-"30-39 ans"
@@ -68,7 +68,26 @@ coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("13","14")]<-"Plus de 70 ans"
 coco$eayy_A2A_rec<- as.factor(coco$eayy_A2A_rec)
 age_rec <- factor(coco$eayy_A2A_rec, c("Moins 29 ans","30-39 ans","40-49 ans","50-59 ans","60-69 ans","Plus de 70 ans")) #Mettre dans l'ordre les modalités
 freq(age_rec)
-# Temps consacré par rappport à d'habitude à parler au telephone
+
+```
+
+## La place de la technologie
+```{r}
+#rapport nb ordi sur nb personnes dans le ménage
+coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
+freq(coco$coco1_q28_rap)
+coco$coco1_q28_score <- case_when(coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
+                                  coco$coco1_q28_rap==1 ~ "Un par pers", 
+                                  coco$coco1_q28_rap>1 ~ "Plus d'1/pers")  
+coco$coco1_q28_score <- factor(coco$coco1_q28_score,levels=c("Moins de 1/2 pers","Un par pers","Plus d'1/pers"))
+#rapport nb smartphones/tablettes sur nb personnes dans le ménage
+coco$coco1_q29_rap <- (coco$coco1_q29/coco$coco1_q23)
+freq(coco$coco1_q29_rap)
+coco$coco1_q29_score <- case_when(coco$coco1_q29_rap<1.5 ~ "Moins d'1/pers",
+                                  coco$coco1_q29_rap==2 ~ "2 outils/pers", 
+                                  coco$coco1_q29_rap>2 ~ "+ de 2/pers")  
+coco$coco1_q29_score <- factor(coco$coco1_q29_score,levels=c("Moins d'1/pers","2 outils/pers","+ de 2/pers"))
+# Temps consacré par rapport à d'habitude à parler au telephone
 freq(coco$coco1_q61_7)
 coco$coco1_q61_7[coco$coco1_q61_7 %in% c("1","2")]<-"Moins que d'habitude"
 coco$coco1_q61_7[coco$coco1_q61_7 %in% c("3")]<-"Autant que d'habitude"
@@ -94,8 +113,6 @@ wtd.table(age_rec, coco$coco1_q61_8,
   cprop(digits=1)
 ```
 
-## La place de la technologie
-
 # Partie 2 : Des compositions de ménages importantes
 
 ## Impact du nombre de personnes dans le foyer
@@ -108,7 +125,7 @@ Les personnes vivant seules (mais pas nécessairement célibataires) déclarent 
 Si l’on s’intéresse au nombre d’habitant·e·s dans le ménage, les individus passant le confinement seuls déclarent plus souvent avoir vu des proches lors de sorties communes. C'est néanmoins le contraire pour les rencontres virtuelles : ce sont effectivement les personnes passant le confinement à plusieurs qui le déclarent un peu plus. Ces différences restent néanmoins minimes, en particulier pour les rencontres virtuelles. 
 
 Avec les données à notre disposition, nous avons décidé de représenter graphiquement sur le territoire de la France métropolitaine (hors Corse) la part des ménages composés d’une seule personne. La composition des ménages étant liée à la nature de l’espace occupé (territoire rural, métropole…), alors la proportion différenciée de métropoles sur notre territoire donnera des résultats contrastés. 
-```{r carte, eval=FALSE}
+```{r carte}
 region_sf <- st_read(dsn = "regions-20180101.shp")
 region_sf <- st_transform(region_sf, crs = 2154)
 region_sf<-subset(region_sf, code_insee!=94 & !code_insee %in% c("01","02","03","04","06"))
@@ -142,7 +159,7 @@ ggplot()+
        fill="Pourcentage de personnes vivant seules",
        caption="© les contributeurs d'OpenStreetMap sous licence ODbL")
 ```
-<font size="2"> *Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
+<font size="1"> *Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
 Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement.     
 Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré.  
 Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. * </font>
