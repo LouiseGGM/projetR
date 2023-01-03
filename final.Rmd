@@ -1,11 +1,18 @@
 ---
-title: "Untitled"
+title: "final"
 author: "LouiseLisaElie"
-date: "2023-01-02"
-output: pdf_document
+date: 'Dernière modification: `r format(Sys.Date(), format="%d/%m/%Y")`'
+output: 
+  html_document:
+    number_sections: yes 
+    toc: yes 
+    toc_depth : '2' 
+    folding_code : hide 
+    toc_float: true
+    theme: journal
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE) #Le code n'apparait pas 
+knitr::opts_chunk$set(echo = FALSE)
 library(questionr)
 library(dplyr)
 library(gtsummary)
@@ -35,7 +42,6 @@ coco2 <- read.csv("data/coco2_2020/donnees_coco2/csv_coco2/fr.cdsp.ddi.elipss.20
 coco3 <- read.csv("data/coco3_2020/donnees_coco3/csv_coco3/fr.cdsp.ddi.elipss.202005.csv", stringsAsFactors = F)
 coco2a <- coco2[,!grepl("eavy", names(coco2))]
 coco3a <- coco3[,!grepl("eavy", names(coco3))]
-rm(coco2, coco3)
 cocoa <- inner_join(x=coco1, y=coco2a, by="UID_ANONYM_COVID")
 coco <- inner_join(x=cocoa, y=coco3a, by="UID_ANONYM_COVID")
 rm(coco1, cocoa, coco2a, coco3a, coco2, coco3)
@@ -50,6 +56,43 @@ Nous pouvons constater que les individus ayant déclaré un travail majoritairem
 Le chômage partiel a également été de mise pour certains secteurs. Ainsi, d'après l'INSEE, la suspension d’activité a "touché en priorité les activités les plus étroitement en contact avec le public : la restauration, l’hébergement, les services à la personne ou les activités culturelles et récréatives, mais aussi les transports aériens" (Duc et Souquet, 2020, p. 1). D'après ce même article, 70 % des entreprises de 10 salariés ou plus (5 salariés ou plus pour le commerce de détail) ont eu recours au chômage partiel pendant le premier confinement.
 
 Cette remarque illustre la difficulté à déterminer un état clair des modalités d'exercice de l'emploi. En effet, une entreprise peut avoir recours au chômage partiel pendant quelques jours/semaines, or, nous n'avons pas accès à ce niveau de détails : l'enquête coco a été renouvelée toutes les 2/3 semaines. De plus, nos 3 vagues ne contiennent pas les mêmes questions vis-à-vis de la modalité d'exercice de l'emploi ; effectivement la q38 est unique à la deuxième et troisième vague, mais les formulations changent entre elles, puisque la vague 2 interroge la situation sous les 2 dernières semaines alors que la vague 3 interroge la situation actuelle à la date de passation (fin Avril-début Mai). Nous n'avons donc pas accès à l'entière temporalité, et au-delà, nous n'avons ainsi pas pu créer de variables regroupant les informations de coco1, 2 et 3.
+```{r recodages}
+coco$coco1_q23[coco$coco1_q23 ==2.6] <- 3 #On transforme le 2,6 en 3 personne dans le foyer
+freq(coco$eayy_A2A_rec)
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("1","2","3","4",'5')]<-"Moins 29 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("6","7")]<-"30-39 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("8","9")]<-"40-49 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("10","11")]<-"50-59 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("12","12")]<-"60-69 ans"
+coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("13","14")]<-"Plus de 70 ans"
+coco$eayy_A2A_rec<- as.factor(coco$eayy_A2A_rec)
+age_rec <- factor(coco$eayy_A2A_rec, c("Moins 29 ans","30-39 ans","40-49 ans","50-59 ans","60-69 ans","Plus de 70 ans")) #Mettre dans l'ordre les modalités
+freq(age_rec)
+# Temps consacré par rappport à d'habitude à parler au telephone
+freq(coco$coco1_q61_7)
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("1","2")]<-"Moins que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("3")]<-"Autant que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("4","5")]<-"Plus que d'habitude"
+coco$coco1_q61_7[coco$coco1_q61_7 %in% c("6","9999")]<-"NC ou NA"
+coco$coco1_q61_7<- as.factor(coco$coco1_q61_7)
+levels(coco$coco1_q61_7)
+coco$coco1_q61_7 <- factor(coco$coco1_q61_7, c("Moins que d'habitude","Autant que d'habitude", "Plus que d'habitude","NC ou NA"))
+wtd.table(age_rec, coco$coco1_q61_7, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+# Temps consacré par rappport à d'habitude à utiliser les réseau sociaux
+freq(coco$coco1_q61_8)
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("1","2")]<-"Moins que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("3")]<-"Autant que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("4","5")]<-"Plus que d'habitude"
+coco$coco1_q61_8[coco$coco1_q61_8 %in% c("6","9999")]<-"NC ou NA"
+coco$coco1_q61_8<- as.factor(coco$coco1_q61_8)
+levels(coco$coco1_q61_8)
+coco$coco1_q61_8 <- factor(coco$coco1_q61_8, c("Moins que d'habitude","Autant que d'habitude", "Plus que d'habitude","NC ou NA"))
+wtd.table(age_rec, coco$coco1_q61_8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
 
 ## La place de la technologie
 
@@ -65,8 +108,8 @@ Les personnes vivant seules (mais pas nécessairement célibataires) déclarent 
 Si l’on s’intéresse au nombre d’habitant·e·s dans le ménage, les individus passant le confinement seuls déclarent plus souvent avoir vu des proches lors de sorties communes. C'est néanmoins le contraire pour les rencontres virtuelles : ce sont effectivement les personnes passant le confinement à plusieurs qui le déclarent un peu plus. Ces différences restent néanmoins minimes, en particulier pour les rencontres virtuelles. 
 
 Avec les données à notre disposition, nous avons décidé de représenter graphiquement sur le territoire de la France métropolitaine (hors Corse) la part des ménages composés d’une seule personne. La composition des ménages étant liée à la nature de l’espace occupé (territoire rural, métropole…), alors la proportion différenciée de métropoles sur notre territoire donnera des résultats contrastés. 
-```{r carte}
-region_sf <- st_read(dsn = "/regions-20180101-shp/regions-20180101-shp/regions-20180101.shp")
+```{r carte, eval=FALSE}
+region_sf <- st_read(dsn = "regions-20180101.shp")
 region_sf <- st_transform(region_sf, crs = 2154)
 region_sf<-subset(region_sf, code_insee!=94 & !code_insee %in% c("01","02","03","04","06"))
 #recodage variables spatiales / region_sf$code_insee
@@ -80,7 +123,7 @@ region_sf$code_insee_rec [region_sf$code_insee==75] <- 6
 region_sf$code_insee_rec [region_sf$code_insee==84] <- 7
 region_sf$code_insee_rec [region_sf$code_insee %in% c(93,76)] <- 8
 # Pourcentage de gens seuls ----
-a<-data.frame(wtd.table(coco$insee_NUTS1, coco$eayy_C1_rec, 
+a<-data.frame(wtd.table(coco$insee_NUTS1, coco$coco1_q23, 
                         weights = coco$coco2_POIDS, useNA = "ifany") %>% 
                 rprop(digits=1))
 b <- a[(1:8),]
@@ -95,15 +138,14 @@ ggplot()+
   geom_sf(data=regioncoco_sf, aes(fill=Freq)) +
   viridis::scale_fill_viridis(direction=-1)+
   theme_bw()+
-  labs(title = "Pourcentage de personnes vivant seules au sein de la France métropolitaine (hors Corse)",
+  labs(title = "Pourcentage de personnes vivant seules au sein de la France métropolitaine  (hors Corse)",
        fill="Pourcentage de personnes vivant seules",
        caption="© les contributeurs d'OpenStreetMap sous licence ODbL")
 ```
-<font size="6">Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
-Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement. <br/>
-Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré. 
-Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. </font>
----
+<font size="2"> *Note : La pondération utilisée se base sur les 998 répondants de la vague 2 de CoCo, 151 d’entre eux n’ont pas répondu aux vagues 1, 2 et 3, et ont donc été exclus. 
+Lecture : Dans la région méditerranéenne, 26,15 % des personnes interrogées vivent seules lors du premier confinement.     
+Champ : Les 847 individus ayant répondu aux trois premières vagues de l’enquête CoCo (2020), ayant de 18 à 79 ans, vivant en France métropolitaine (hors Corse), en résidence ordinaire et comprenant suffisamment le français pour répondre au questionnaire auto-administré.  
+Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Mai) et l’enquête annuelle de 2019. * </font>
 
 # Partie 3 : Régression
 ```{r}
@@ -111,9 +153,179 @@ Source : Les trois premières vagues de l’enquête CoCo (début Avril à mi-Ma
 ```
 
 # Conclusion : 
-
-\newpage
+<div style="page-break-after: always;"></div>
+\newpage  
 # Bibliographie : 
 - 
 -
 -
+```{r tests non probants, eval = FALSE}
+#enfants cohabitants eayy_C8B_rec 
+coco$eayy_C8B_reco [coco$eayy_C8B_rec==1] <- "0"
+coco$eayy_C8B_reco [coco$eayy_C8B_rec==6] <- "0"
+coco$eayy_C8B_reco [coco$eayy_C8B_rec==2] <- "1"
+coco$eayy_C8B_reco [coco$eayy_C8B_rec==3] <- "2"
+coco$eayy_C8B_reco [coco$eayy_C8B_rec==4] <- "3 et +"
+
+freq(coco$eayy_C8B_reco)
+
+cocofemme$eayy_C8B_reco [cocofemme$eayy_C8B_rec==1] <- "0"
+cocofemme$eayy_C8B_reco [cocofemme$eayy_C8B_rec==6] <- "0"
+cocofemme$eayy_C8B_reco [cocofemme$eayy_C8B_rec==2] <- "1"
+cocofemme$eayy_C8B_reco [cocofemme$eayy_C8B_rec==3] <- "2"
+cocofemme$eayy_C8B_reco [cocofemme$eayy_C8B_rec==4] <- "3 et +"
+
+freq(cocofemme$eayy_C8B_reco)
+
+#stress coco1_q64
+coco$coco1_q64 [coco$coco1_q64==0] <- "1pas/très peu"
+coco$coco1_q64 [coco$coco1_q64==1] <- "1pas/très peu"
+coco$coco1_q64 [coco$coco1_q64==2] <- "2peu"
+coco$coco1_q64 [coco$coco1_q64==3] <- "2peu"
+coco$coco1_q64 [coco$coco1_q64==4] <- "2peu"
+coco$coco1_q64 [coco$coco1_q64==5] <- "3moyenne"
+coco$coco1_q64 [coco$coco1_q64==6] <- "4oui"
+coco$coco1_q64 [coco$coco1_q64==7] <- "4oui"
+coco$coco1_q64 [coco$coco1_q64==8] <- "4oui"
+coco$coco1_q64 [coco$coco1_q64==9] <- "5bcp"
+coco$coco1_q64 [coco$coco1_q64==10] <- "5bcp"
+
+freq(coco$coco1_q64)
+
+cocofemme$coco1_q64 [cocofemme$coco1_q64==0] <- "1pas/très peu"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==1] <- "1pas/très peu"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==2] <- "2peu"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==3] <- "2peu"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==4] <- "2peu"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==5] <- "3moyenne"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==6] <- "4oui"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==7] <- "4oui"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==8] <- "4oui"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==9] <- "5bcp"
+cocofemme$coco1_q64 [cocofemme$coco1_q64==10] <- "5bcp"
+
+freq(cocofemme$coco1_q64)
+
+#Tris croisés pondérés ----
+#Solitude ----
+1- tres seul/2-plutot seul/3-plutot entouré/4-tres entouré
+#solitude/enfants?  (1 oui 2 non)
+wtd.table(coco$coco1_q21, coco$eayy_C8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q21, cocofemme$eayy_C8, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#solitude/nb enfant 
+wtd.table(coco$coco1_q21, coco$eayy_C8A_rec, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q21, cocofemme$eayy_C8A_rec, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#solitude/nb enfant cohabitants
+wtd.table(coco$coco1_q21, coco$eayy_C8B_reco, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q21, cocofemme$eayy_C8B_reco, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#Fréquence des sorties ----
+# coco1_q47 --> fréquences des sorties 1 Jamais/2 Une fois par semaine ou -/
+#3 Une fois tous les 2-3 jours/4 Tous les jours ou presque
+
+#Sortie/enfants?  (1 oui 2 non)
+wtd.table(coco$coco1_q47, coco$eayy_C8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q47, cocofemme$eayy_C8, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#sortie/nb enfant
+wtd.table(coco$coco1_q47, coco$eayy_C8A_rec, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q47, cocofemme$eayy_C8A_rec, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#sortie/nb enfant cohabitants
+wtd.table(coco$coco1_q47, coco$eayy_C8B_reco, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q47, cocofemme$eayy_C8B_reco, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+# Stress lié au confinement ----
+# coco1_q64 --> stress lié au confinement (échelle)
+#femme = 2
+wtd.table(coco$eayy_A1, coco$coco1_q64, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#Stress/enfants?  (1 oui 2 non)
+wtd.table(coco$coco1_q64, coco$eayy_C8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q64, cocofemme$eayy_C8, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+#stress/nb enfant
+#faire un bockspot avec les don pondérées
+wtd.table(coco$coco1_q64, coco$eayy_C8A_rec, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+wtd.table(cocofemme$coco1_q64, cocofemme$eayy_C8A_rec, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#stress/nb enfant cohabitants
+wtd.table(coco$coco1_q64, coco$eayy_C8B_reco, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q64, cocofemme$eayy_C8B_reco, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#Attentes sur les relations sociales ----
+# coco1_q83_6 --> attente que le confinement affecte ses relations sociales
+#1 pas du tout/un peu/assez/bcp
+
+#Relations sociales/enfants?  (1 oui 2 non)
+wtd.table(coco$coco1_q83_6, coco$eayy_C8, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q83_6, cocofemme$eayy_C8, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#Relations sociales/nb enfant
+wtd.table(coco$coco1_q83_6, coco$eayy_C8A_rec, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q83_6, cocofemme$eayy_C8A_rec, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+#Relations sociales/nb enfant cohabitants 
+wtd.table(coco$coco1_q83_6, coco$eayy_C8B_reco, 
+          weights = coco$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+
+wtd.table(cocofemme$coco1_q83_6, cocofemme$eayy_C8B_reco, 
+          weights = cocofemme$coco1_POIDS, useNA = "ifany") %>% 
+  cprop(digits=1)
+```
+
