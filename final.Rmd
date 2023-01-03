@@ -68,7 +68,6 @@ coco$eayy_A2A_rec[coco$eayy_A2A_rec %in% c("13","14")]<-"Plus de 70 ans"
 coco$eayy_A2A_rec<- as.factor(coco$eayy_A2A_rec)
 age_rec <- factor(coco$eayy_A2A_rec, c("Moins 29 ans","30-39 ans","40-49 ans","50-59 ans","60-69 ans","Plus de 70 ans")) #Mettre dans l'ordre les modalités
 freq(age_rec)
-
 ```
 
 ## La place de la technologie

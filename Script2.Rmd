@@ -70,9 +70,10 @@ freq(coco$coco1_q28)
 #rapport nb ordi sur nb personnes dans le ménage
 coco$coco1_q28_rap <- (coco$coco1_q28/coco$coco1_q23)
 freq(coco$coco1_q28_rap)
-coco$coco1_q28_score <- case_when(coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
-                                  coco$coco1_q28_rap==1 ~ "Un par pers", 
-                                  coco$coco1_q28_rap>1 ~ "Plus d'1/pers")  
+coco$coco1_q28_score <- case_when(
+                        coco$coco1_q28_rap<1 ~ "Moins de 1/2 pers",
+                        coco$coco1_q28_rap==1 ~ "Un par pers",
+                        coco$coco1_q28_rap>1 ~ "Plus d'1/pers")  
 coco$coco1_q28_score <- factor(coco$coco1_q28_score,levels=c("Moins de 1/2 pers","Un par pers","Plus d'1/pers"))
 freq(coco$coco1_q28_score)
 ```
